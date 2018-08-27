@@ -18,7 +18,7 @@
         "bravecollective/neucore-api": "*@dev",
         "bravecollective/sso-basics": "*@dev",
         "bravecollective/web-ui": "*@dev",
-        "tkhamez/slim-role-auth": "@dev",
+        "tkhamez/slim-role-auth": "0.2.0",
         "vlucas/phpdotenv": "^2.4",
         "doctrine/orm": "^2.0",
         "bryanjhv/slim-session": "^3.5"

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4ccf6dc1793f726482c34438a9b960fc",
+    "content-hash": "ab090636b539b33da29423e8ab3857ec",
     "packages": [
         {
             "name": "bravecollective/neucore-api",
@@ -1608,7 +1608,7 @@
         },
         {
             "name": "tkhamez/slim-role-auth",
-            "version": "dev-master",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tkhamez/slim-role-auth.git",
@@ -1702,8 +1702,7 @@
     "stability-flags": {
         "bravecollective/neucore-api": 20,
         "bravecollective/sso-basics": 20,
-        "bravecollective/web-ui": 20,
-        "tkhamez/slim-role-auth": 20
+        "bravecollective/web-ui": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
