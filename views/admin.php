@@ -7,7 +7,9 @@
 include '_head.php'; // needs $isAdmin and $authName variables
 ?>
 
-<h1 class="text-light">Edit Event</h1>
+<h1 class="text-light">
+    <?= $event->getId() ? 'Edit Event' : 'New event' ?>
+</h1>
 
 <form class="col mb-3 pt-3 pb-3 bg-dark text-light" action="/admin/<?= (int) $event->getId() ?>" method="post">
     <div class="form-group">

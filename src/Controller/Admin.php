@@ -50,7 +50,8 @@ class Admin extends BaseController
         $editId = isset($args['id']) && (int) $args['id'] > 0 ? (int) $args['id'] : 0;
         if ($editId > 0) {
             $event = $this->eventRepository->find($editId);
-        } else {
+        }
+        if (! isset($event)) {
             $event = new Event();
         }
 

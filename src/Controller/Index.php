@@ -12,6 +12,7 @@ class Index extends BaseController
     {
         $limit = 20;
         $page = (int) $request->getParam('page', 1);
+        $page = $page < 1 ? 1 : $page;
         $from = ($page - 1) * $limit;
 
         $activeEvents = $this->eventRepository->findActiveTimers();
