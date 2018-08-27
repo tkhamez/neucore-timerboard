@@ -17,10 +17,40 @@ class Event
     private $id;
 
     /**
-     * @Column(type="string", length=255)
+     * @Column(type="string", length=255, nullable=true)
      * @var string
      */
-    public $name;
+    public $location;
+
+    /**
+     * @Column(type="string", length=255, nullable=true)
+     * @var string
+     */
+    public $priority;
+
+    /**
+     * @Column(type="string", length=255, nullable=true)
+     * @var string
+     */
+    public $structure;
+
+    /**
+     * @Column(type="string", length=255, nullable=true)
+     * @var string
+     */
+    public $type;
+
+    /**
+     * @Column(type="datetime", name="event_time", nullable=true)
+     * @var \DateTime
+     */
+    public $eventTime;
+
+    /**
+     * @Column(type="string", length=255, nullable=true)
+     * @var string
+     */
+    public $result; // win/loss
 
     public function getId()
     {

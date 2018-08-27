@@ -10,9 +10,10 @@ return function (\Psr\Container\ContainerInterface $container)
     $app->get('/auth',  \Brave\TimerBoard\Controller\Authentication::class . ':callback');
 
     // app routes
-    $app->get('/logout', \Brave\TimerBoard\Controller\Authentication::class . ':logout');
-    $app->get('/',       \Brave\TimerBoard\Controller\Index::class . ':board');
-    $app->get('/admin',  \Brave\TimerBoard\Controller\Admin::class . ':index');
+    $app->get('/logout',      \Brave\TimerBoard\Controller\Authentication::class . ':logout');
+    $app->get('/',            \Brave\TimerBoard\Controller\Index::class . ':board');
+    $app->get('/admin/{id}',  \Brave\TimerBoard\Controller\Admin::class . ':index');
+    $app->post('/admin/{id}', \Brave\TimerBoard\Controller\Admin::class . ':save');
 
     return $app;
 };

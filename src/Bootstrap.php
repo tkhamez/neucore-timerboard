@@ -22,6 +22,8 @@ class Bootstrap
      */
     public function __construct()
     {
+        date_default_timezone_set('UTC');
+
         if (is_readable(ROOT_DIR . '/.env')) {
             $dotEnv = new Dotenv(ROOT_DIR);
             $dotEnv->load();
