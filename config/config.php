@@ -23,5 +23,9 @@ return [
     'CORE_APP_TOKEN' => getenv('CORE_APP_TOKEN'),
 
     // DB
-    'DB_URL' => getenv('DB_URL')
+    'DB_URL' => getenv('DB_URL'),
+
+    // timer board
+    'brave.groups.read' => getenv('BOARD_GROUPS_READ'),
+    'brave.groups.write' => getenv('BOARD_GROUPS_WRITE'),
 ];

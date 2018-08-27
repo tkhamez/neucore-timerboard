@@ -1,6 +1,7 @@
 <?php
 /* @var $this \Brave\TimerBoard\View */
 /* @var $events \Brave\TimerBoard\Entity\Event[] */
+/* @var $isAdmin bool */
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,6 +15,13 @@
 <body class="container-fluid">
     <header class="navbar navbar-dark bg-brave shadow-1 mb-3">
         <span class="navbar-brand">Brave Collective - TimerBoard</span>
+        <ul class="navbar-nav mr-auto">
+            <?php if ($isAdmin) { ?>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/admin">Admin</a>
+                </li>
+            <?php } ?>
+        </ul>
         <form class="form-inline my-2 my-lg-0">
             <a class="btn btn-outline-success my-2 my-sm-0" href="/logout">Logout</a>
         </form>

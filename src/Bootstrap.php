@@ -3,6 +3,9 @@ namespace Brave\TimerBoard;
 
 use Dotenv\Dotenv;
 use Psr\Container\ContainerInterface;
+use Slim\App;
+use Tkhamez\Slim\RoleAuth\RoleMiddleware;
+use Tkhamez\Slim\RoleAuth\SecureRouteMiddleware;
 
 /**
  *
@@ -32,29 +35,46 @@ class Bootstrap
         return $this->container;
     }
 
+    public function run()
+    {
+        try {
+            $app = $this->enableRoutes();
+            $this->addMiddleware($app);
+            $app->run();
+        } catch(\Exception $e) {
+            #var_Dump((string)$e);
+            // TODO log?
+            echo 'Error.';
+        }
+    }
+
     /**
      * @return \Slim\App
      * @throws \Psr\Container\ContainerExceptionInterface
      */
-    public function enableRoutes()
+    private function enableRoutes()
     {
         /** @var \Slim\App $app */
         $routesConfigurator = require_once(ROOT_DIR . '/config/routes.php');
         $app = $routesConfigurator($this->container);
 
-        // uncomment these if you need groups from Brave Core to secure routes
-        $app->add(new \Tkhamez\Slim\RoleAuth\SecureRouteMiddleware(
-            include ROOT_DIR . '/config/security.php',
-            ['redirect_url' => '/login']
-        ));
-        $app->add(new \Tkhamez\Slim\RoleAuth\RoleMiddleware($this->container->get(RoleProvider::class)));
+        return $app;
+    }
+
+    /**
+     * @param App $app
+     * @throws \Psr\Container\ContainerExceptionInterface
+     */
+    private function addMiddleware(App $app)
+    {
+        $security = $this->container->get(Security::class);
+        $app->add(new SecureRouteMiddleware($security->readConfig(), ['redirect_url' => '/login']));
+        $app->add(new RoleMiddleware($this->container->get(RoleProvider::class)));
 
         $app->add(new \Slim\Middleware\Session([
             'name' => 'brave_service',
             'autorefresh' => true,
             'lifetime' => '1 hour'
         ]));
-
-        return $app;
     }
 }

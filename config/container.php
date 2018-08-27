@@ -79,4 +79,11 @@ return [
         $class = $em->getMetadataFactory()->getMetadataFor(\Brave\TimerBoard\Entity\Event::class);
         return new \Brave\TimerBoard\Repository\EventRepository($em, $class);
     },
+
+    \Brave\TimerBoard\Security::class => function (\Psr\Container\ContainerInterface $container) {
+        return new \Brave\TimerBoard\Security(
+            $container->get('settings'),
+            $container->get(\Brave\TimerBoard\RoleProvider::class)
+        );
+    },
 ];
