@@ -1,3 +1,4 @@
 # Brave TimerBoard
 
-Copy `config/config.dist.php` to `config/config.php` and adjust values.
+Copy `.env.dist` to `.env` and adjust values or set the corresponding 
+environment variables in another way.

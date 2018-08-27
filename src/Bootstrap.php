@@ -1,6 +1,7 @@
 <?php
 namespace Brave\TimerBoard;
 
+use Dotenv\Dotenv;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -18,9 +19,13 @@ class Bootstrap
      */
     public function __construct()
     {
+        if (is_readable(ROOT_DIR . '/.env')) {
+            $dotEnv = new Dotenv(ROOT_DIR);
+            $dotEnv->load();
+        }
+
         $container = new \Slim\Container(require_once(ROOT_DIR . '/config/container.php'));
         $this->container = $container;
-
     }
 
     /**
