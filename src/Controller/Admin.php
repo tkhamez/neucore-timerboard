@@ -1,5 +1,4 @@
 <?php
-
 namespace Brave\TimerBoard\Controller;
 
 use Brave\TimerBoard\Entity\Event;
@@ -15,6 +14,7 @@ class Admin extends BaseController
     {
         $view = new View(ROOT_DIR . '/views/admin.php');
         $view->addVar('isAdmin', $this->security->isAdmin());
+        $view->addVar('authName', $this->security->getAuthorizedName());
         $view->addVar('event', $this->getEvent($args));
 
         $response->write($view->getContent());

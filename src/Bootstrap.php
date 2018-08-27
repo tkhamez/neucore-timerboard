@@ -7,9 +7,6 @@ use Slim\App;
 use Tkhamez\Slim\RoleAuth\RoleMiddleware;
 use Tkhamez\Slim\RoleAuth\SecureRouteMiddleware;
 
-/**
- *
- */
 class Bootstrap
 {
     /**
@@ -18,7 +15,7 @@ class Bootstrap
     private $container;
 
     /**
-     * Bootstrap constructor
+     * @throws \Psr\Container\ContainerExceptionInterface
      */
     public function __construct()
     {
@@ -42,6 +39,9 @@ class Bootstrap
         return $this->container;
     }
 
+    /**
+     * @throws \Psr\Container\ContainerExceptionInterface
+     */
     public function run()
     {
         try {

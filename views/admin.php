@@ -1,9 +1,10 @@
 <?php
 /* @var $this \Brave\TimerBoard\View */
-/* @var $event \Brave\TimerBoard\Entity\Event */
 /* @var $isAdmin bool */
+/* @var $authName string */
+/* @var $event \Brave\TimerBoard\Entity\Event */
 
-include '_head.php'; // needs $isAdmin variable
+include '_head.php'; // needs $isAdmin and $authName variables
 ?>
 
 <h1 class="text-light">Edit Event</h1>
@@ -23,7 +24,7 @@ include '_head.php'; // needs $isAdmin variable
         <small class="form-text text-white-50">Enter the priority, e. g. Important</small>
     </div>
     <div class="form-group">
-        <label class="text-light" for="type">Structure</label>
+        <label class="text-light" for="structure">Structure</label>
         <input type="text" class="form-control" id="structure" name="structure"
                value="<?= $this->esc($event->structure) ?>">
         <small class="form-text text-white-50">Enter the structure, e. g. Citadel [M]</small>

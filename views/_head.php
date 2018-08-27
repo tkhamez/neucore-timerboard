@@ -1,6 +1,7 @@
 <?php
 /* @var $this \Brave\TimerBoard\View */
 /* @var $isAdmin bool */
+/* @var $authName string */
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,6 +26,7 @@
             <?php } ?>
         </ul>
         <form class="form-inline my-2 my-lg-0">
+            <?= $authName ?>
             <a class="btn btn-outline-success my-2 my-sm-0" href="/logout">Logout</a>
         </form>
     </header>

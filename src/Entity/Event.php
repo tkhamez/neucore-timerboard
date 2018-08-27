@@ -1,5 +1,4 @@
 <?php
-
 namespace Brave\TimerBoard\Entity;
 
 /**

@@ -83,7 +83,8 @@ return [
     \Brave\TimerBoard\Security::class => function (\Psr\Container\ContainerInterface $container) {
         return new \Brave\TimerBoard\Security(
             $container->get('settings'),
-            $container->get(\Brave\TimerBoard\RoleProvider::class)
+            $container->get(\Brave\TimerBoard\RoleProvider::class),
+            $container
         );
     },
 ];

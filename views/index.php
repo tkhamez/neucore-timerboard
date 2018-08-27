@@ -1,15 +1,19 @@
 <?php
 /* @var $this \Brave\TimerBoard\View */
+/* @var $isAdmin bool */
+/* @var $authName string */
 /* @var $activeEvents \Brave\TimerBoard\Entity\Event[] */
 /* @var $expiredEvents \Brave\TimerBoard\Entity\Event[] */
 /* @var $pages int */
-/* @var $isAdmin bool */
 
-include '_head.php'; // needs $isAdmin variable
+include '_head.php'; // needs $isAdmin and $authName variables
 ?>
 
 
-<?php foreach ([$activeEvents, $expiredEvents] as $idx => $events) { ?>
+<?php
+foreach ([$activeEvents, $expiredEvents] as $idx => $events) {
+    /* @var $events \Brave\TimerBoard\Entity\Event[] */
+?>
     <h1 class="text-light">
         <?= $idx === 0 ? 'Active' : 'Expired' ?>
         Timers

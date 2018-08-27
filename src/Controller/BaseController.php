@@ -1,5 +1,4 @@
 <?php
-
 namespace Brave\TimerBoard\Controller;
 
 use Brave\TimerBoard\Repository\EventRepository;

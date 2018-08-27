@@ -1,6 +1,8 @@
 <?php
 namespace Brave\TimerBoard;
 
+use Brave\Sso\Basics\SessionHandlerInterface;
+use Psr\Container\ContainerInterface;
 use Slim\Collection;
 
 class Security
@@ -10,13 +12,19 @@ class Security
      */
     private $roleProvider;
 
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
     private $groupsRead = [];
 
     private $groupsWrite = [];
 
-    public function __construct(Collection $settings, RoleProvider $roleProvider)
+    public function __construct(Collection $settings, RoleProvider $roleProvider, ContainerInterface $container = null)
     {
         $this->roleProvider = $roleProvider;
+        $this->container = $container;
 
         if (trim($settings['app.groups.read']) !== '') {
             $this->groupsRead = explode(',', $settings['app.groups.read']);
@@ -50,5 +58,17 @@ class Security
         $roles = $this->roleProvider->getRoles();
 
         return count(array_intersect($this->groupsWrite, $roles)) > 0;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAuthorizedName()
+    {
+        /* @var $eveAuth \Brave\Sso\Basics\EveAuthentication */
+        $session = $this->container->get(SessionHandlerInterface::class);
+        $eveAuth = $session ? $session->get('eveAuth', null) : null;
+
+        return $eveAuth ? $eveAuth->getCharacterName() : '';
     }
 }
