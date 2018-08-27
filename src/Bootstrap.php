@@ -28,6 +28,11 @@ class Bootstrap
         }
 
         $this->container = new \Slim\Container(require_once(ROOT_DIR . '/config/container.php'));
+
+        error_reporting(E_ALL);
+        if ($this->container->get('settings')['app.env'] === 'dev') {
+            ini_set('display_errors', '1');
+        }
     }
 
     public function getContainer(): ContainerInterface
@@ -42,9 +47,12 @@ class Bootstrap
             $this->addMiddleware($app);
             $app->run();
         } catch(\Exception $e) {
-            #var_Dump((string)$e);
+            if ($this->container->get('settings')['app.env'] === 'dev') {
+                echo '<pre>' . (string)$e . '</pre>';
+            } else {
+                echo 'Error.';
+            }
             // TODO log?
-            echo 'Error.';
         }
     }
 

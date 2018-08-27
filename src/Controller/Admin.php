@@ -2,34 +2,20 @@
 
 namespace Brave\TimerBoard\Controller;
 
-use Brave\TimerBoard\Repository\EventRepository;
-use Doctrine\ORM\EntityManagerInterface;
-use Psr\Container\ContainerInterface;
+use Brave\TimerBoard\View;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Http\Response;
 
-class Admin
+class Admin extends BaseController
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
-
-    /**
-     * @var EventRepository
-     */
-    private $eventRepository;
-
-    public function __construct(ContainerInterface $container)
-    {
-        $this->entityManager = $container->get(EntityManagerInterface::class);
-        $this->eventRepository = $container->get(EventRepository::class);
-    }
-
     public function index(ServerRequestInterface $request, Response $response, array $args): ResponseInterface
     {
-        echo 'Admin';
+        $view = new View(ROOT_DIR . '/views/admin.php');
+        $view->addVar('isAdmin', $this->security->isAdmin());
+
+        $response->write($view->getContent());
+
         return $response;
     }
 }

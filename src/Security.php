@@ -18,11 +18,11 @@ class Security
     {
         $this->roleProvider = $roleProvider;
 
-        if (trim($settings['brave.groups.read']) !== '') {
-            $this->groupsRead = explode(',', $settings['brave.groups.read']);
+        if (trim($settings['app.groups.read']) !== '') {
+            $this->groupsRead = explode(',', $settings['app.groups.read']);
         }
-        if (trim($settings['brave.groups.write']) !== '') {
-            $this->groupsWrite = explode(',', $settings['brave.groups.write']);
+        if (trim($settings['app.groups.write']) !== '') {
+            $this->groupsWrite = explode(',', $settings['app.groups.write']);
         }
     }
 
@@ -30,9 +30,9 @@ class Security
     {
         $securityConfig = [];
         foreach (include ROOT_DIR . '/config/security.php' as $path => $roles) {
-            if ($roles === '{BOARD_GROUPS_READ}') {
+            if ($roles === '{APP_GROUPS_READ}') {
                 $securityConfig[$path] = $this->groupsRead;
-            } elseif ($roles === '{BOARD_GROUPS_WRITE}') {
+            } elseif ($roles === '{APP_GROUPS_WRITE}') {
                 $securityConfig[$path] = $this->groupsWrite;
             } else {
                 $securityConfig[$path] = $roles;

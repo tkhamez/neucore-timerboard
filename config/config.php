@@ -2,7 +2,7 @@
 
 return [
     // Slim
-    'displayErrorDetails' => (bool) getenv('SLIM_DISPLAY_ERROR_DETAILS'),
+    'displayErrorDetails' => getenv('APP_ENV') === 'dev',
     'determineRouteBeforeAppMiddleware' => true,
 
     // SSO CONFIGURATION
@@ -26,6 +26,7 @@ return [
     'DB_URL' => getenv('DB_URL'),
 
     // timer board
-    'brave.groups.read' => getenv('BOARD_GROUPS_READ'),
-    'brave.groups.write' => getenv('BOARD_GROUPS_WRITE'),
+    'app.env' => getenv('APP_ENV'),
+    'app.groups.read' => getenv('APP_GROUPS_READ'),
+    'app.groups.write' => getenv('APP_GROUPS_WRITE'),
 ];

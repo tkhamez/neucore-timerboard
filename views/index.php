@@ -2,55 +2,28 @@
 /* @var $this \Brave\TimerBoard\View */
 /* @var $events \Brave\TimerBoard\Entity\Event[] */
 /* @var $isAdmin bool */
+
+include '_head.php'; // needs $isAdmin variable
 ?>
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <title>Brave Collective - TimerBoard</title>
-    <link rel="stylesheet" href="/assets/bravecollective/web-ui/css/brave.css">
-</head>
+<h1 class="text-light">Timers</h1>
 
-<body class="container-fluid">
-    <header class="navbar navbar-dark bg-brave shadow-1 mb-3">
-        <span class="navbar-brand">Brave Collective - TimerBoard</span>
-        <ul class="navbar-nav mr-auto">
-            <?php if ($isAdmin) { ?>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/admin">Admin</a>
-                </li>
-            <?php } ?>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <a class="btn btn-outline-success my-2 my-sm-0" href="/logout">Logout</a>
-        </form>
-    </header>
-
-    <h1 class="text-light">Timers</h1>
-
-    <table class="table table-dark">
-        <thead>
+<table class="table table-dark">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Priority</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($events as $event) { ?>
             <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Priority</th>
+                <th scope="row"><?= $this->esc($event->name) ?></th>
+                <td></td>
             </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($events as $event) { ?>
-                <tr>
-                    <th scope="row"><?= $this->esc($event->name) ?></th>
-                    <td></td>
-                </tr>
-            <?php } ?>
-        </tbody>
-    </table>
+        <?php } ?>
+    </tbody>
+</table>
 
-    <footer class="navbar navbar-dark bg-brave shadow-1">
-        <div class="align-self-center">
-            Brave Collective Services. For support write to support@bravecollective.freshdesk.com
-            or ask in the ingame channel "Brave IT".
-        </div>
-    </footer>
-</body>
-</html>
+<?php
+include '_foot.php';
