@@ -32,12 +32,12 @@ return [
         );
     },
 
-    \Brave\CoreConnector\SessionHandler::class => function (\Psr\Container\ContainerInterface $container) {
-        return new \Brave\CoreConnector\SessionHandler($container);
+    \Brave\TimerBoard\SessionHandler::class => function (\Psr\Container\ContainerInterface $container) {
+        return new \Brave\TimerBoard\SessionHandler($container);
     },
 
     \Brave\Sso\Basics\SessionHandlerInterface::class => function (\Psr\Container\ContainerInterface $container) {
-        return $container->get(\Brave\CoreConnector\SessionHandler::class);
+        return $container->get(\Brave\TimerBoard\SessionHandler::class);
     },
 
     \Brave\NeucoreApi\Api\ApplicationApi::class => function (\Psr\Container\ContainerInterface $container) {
@@ -51,11 +51,11 @@ return [
         $config->setApiKey('Authorization', $apiKey);
         $config->setApiKeyPrefix('Authorization', 'Bearer');
 
-        return new Brave\NeucoreApi\Api\ApplicationApi(null, $config);
+        return new \Brave\NeucoreApi\Api\ApplicationApi(null, $config);
     },
 
-    \Brave\CoreConnector\RoleProvider::class => function (\Psr\Container\ContainerInterface $container) {
-        return new \Brave\CoreConnector\RoleProvider(
+    \Brave\TimerBoard\RoleProvider::class => function (\Psr\Container\ContainerInterface $container) {
+        return new \Brave\TimerBoard\RoleProvider(
             $container->get(\Brave\NeucoreApi\Api\ApplicationApi::class),
             $container->get(\Brave\Sso\Basics\SessionHandlerInterface::class)
         );

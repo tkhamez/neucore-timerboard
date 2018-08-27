@@ -1,6 +1,8 @@
 <?php
 
 use Brave\Sso\Basics\AuthenticationController;
+use Brave\TimerBoard\Controller\Authentication;
+use Brave\TimerBoard\Controller\Index;
 
 return function (\Psr\Container\ContainerInterface $container)
 {
@@ -9,7 +11,10 @@ return function (\Psr\Container\ContainerInterface $container)
 
     // SSO via sso-basics package
     $app->get('/login', AuthenticationController::class . ':index');
-    $app->get('/auth', AuthenticationController::class . ':auth');
+    $app->get('/auth',  Authentication::class . ':callback');
+
+    $app->get('/logout', Authentication::class . ':logout');
+    $app->get('/',       Index::class . ':board');
 
     return $app;
 };

@@ -1,34 +1,24 @@
 {
-    "name": "bravecollective/core-connector",
+    "name": "bravecollective/timerboard",
+    "type": "project",
     "autoload": {
         "psr-4": {
-            "Brave\\CoreConnector\\": "src"
+            "Brave\\TimerBoard\\": "src"
         }
     },
     "repositories": [
-    {
-        "type": "git",
-        "url": "https://github.com/bravecollective/neucore-api.git"
-    },
-    {
-        "type": "git",
-        "url": "https://github.com/bravecollective/sso-basics.git"
-    },
-    {
-        "type": "git",
-        "url": "https://github.com/bravecollective/web-ui.git"
-    },
-    {
-        "type": "git",
-        "url": "https://github.com/tkhamez/slim-role-auth.git"
-    }
+        { "type": "git", "url": "https://github.com/bravecollective/neucore-api.git" },
+        { "type": "git", "url": "https://github.com/bravecollective/sso-basics.git" },
+        { "type": "git", "url": "https://github.com/bravecollective/web-ui.git" },
+        { "type": "git", "url": "https://github.com/tkhamez/slim-role-auth.git"  }
     ],
     "require": {
+        "php": "^7.0",
         "frontpack/composer-assets-plugin": "^0.9",
         "bravecollective/neucore-api": "*@dev",
         "bravecollective/sso-basics": "*@dev",
         "bravecollective/web-ui": "*@dev",
-        "tkhamez/slim-role-auth": "0.1.0",
+        "tkhamez/slim-role-auth": "@dev",
         "vlucas/phpdotenv": "^2.4",
         "doctrine/dbal": "2.5",
         "bryanjhv/slim-session": "^3.5"
@@ -36,7 +26,7 @@
     "config": {
         "assets-dir": "web/assets",
         "platform": {
-            "php": "5.6.0"
+            "php": "7.0.0"
         }
     }
 }

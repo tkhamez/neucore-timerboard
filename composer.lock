@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4cdcf6a7d3a5f33963319e4503b6b26f",
+    "content-hash": "fb3fd3e5dbc9efd8664658a113e043b7",
     "packages": [
         {
             "name": "bravecollective/neucore-api",
@@ -523,33 +523,33 @@
         },
         {
             "name": "doctrine/inflector",
-            "version": "v1.1.0",
+            "version": "v1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/inflector.git",
-                "reference": "90b2128806bfde671b6952ab8bea493942c1fdae"
+                "reference": "e11d84c6e018beedd929cff5220969a3c6d1d462"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/inflector/zipball/90b2128806bfde671b6952ab8bea493942c1fdae",
-                "reference": "90b2128806bfde671b6952ab8bea493942c1fdae",
+                "url": "https://api.github.com/repos/doctrine/inflector/zipball/e11d84c6e018beedd929cff5220969a3c6d1d462",
+                "reference": "e11d84c6e018beedd929cff5220969a3c6d1d462",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.2"
+                "php": "^7.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "4.*"
+                "phpunit/phpunit": "^6.2"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.1.x-dev"
+                    "dev-master": "1.2.x-dev"
                 }
             },
             "autoload": {
-                "psr-0": {
-                    "Doctrine\\Common\\Inflector\\": "lib/"
+                "psr-4": {
+                    "Doctrine\\Common\\Inflector\\": "lib/Doctrine/Common/Inflector"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -586,7 +586,7 @@
                 "singularize",
                 "string"
             ],
-            "time": "2015-11-06T14:35:42+00:00"
+            "time": "2017-07-22T12:18:28+00:00"
         },
         {
             "name": "doctrine/lexer",
@@ -1247,11 +1247,11 @@
         },
         {
             "name": "tkhamez/slim-role-auth",
-            "version": "0.1.0",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tkhamez/slim-role-auth.git",
-                "reference": "2bcf0783162cc777e0d77cfc1df9ba450dbfb807"
+                "reference": "3d0079da6b19c62e5ffa5777795a9919b1f12291"
             },
             "require": {
                 "php": ">=5.5.0",
@@ -1282,7 +1282,7 @@
                 "MIT"
             ],
             "description": "Role based authorization for the Slim framework",
-            "time": "2018-08-26T16:47:14+00:00"
+            "time": "2018-08-27T12:56:40+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
@@ -1341,13 +1341,16 @@
     "stability-flags": {
         "bravecollective/neucore-api": 20,
         "bravecollective/sso-basics": 20,
-        "bravecollective/web-ui": 20
+        "bravecollective/web-ui": 20,
+        "tkhamez/slim-role-auth": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^7.0"
+    },
     "platform-dev": [],
     "platform-overrides": {
-        "php": "5.6.0"
+        "php": "7.0.0"
     }
 }

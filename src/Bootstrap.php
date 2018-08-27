@@ -1,5 +1,5 @@
 <?php
-namespace Brave\CoreConnector;
+namespace Brave\TimerBoard;
 
 use Psr\Container\ContainerInterface;
 
@@ -34,8 +34,11 @@ class Bootstrap
         $app = $routesConfigurator($this->container);
 
         // uncomment these if you need groups from Brave Core to secure routes
-        #$app->add(new \Tkhamez\Slim\RoleAuth\SecureRouteMiddleware(include ROOT_DIR . '/config/security.php'));
-        #$app->add(new \Tkhamez\Slim\RoleAuth\RoleMiddleware($this->container->get(RoleProvider::class)));
+        $app->add(new \Tkhamez\Slim\RoleAuth\SecureRouteMiddleware(
+            include ROOT_DIR . '/config/security.php',
+            ['redirect_url' => '/login']
+        ));
+        $app->add(new \Tkhamez\Slim\RoleAuth\RoleMiddleware($this->container->get(RoleProvider::class)));
 
         $app->add(new \Slim\Middleware\Session([
             'name' => 'brave_service',

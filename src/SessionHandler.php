@@ -1,5 +1,5 @@
 <?php
-namespace Brave\CoreConnector;
+namespace Brave\TimerBoard;
 
 use Brave\Sso\Basics\SessionHandlerInterface;
 use SlimSession\Helper;
