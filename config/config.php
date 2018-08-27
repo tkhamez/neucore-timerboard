@@ -15,7 +15,7 @@ return [
     'SSO_SCOPES' => getenv('SSO_SCOPES'),
 
     // App
-    'brave.serviceName' => 'Brave TimerBoard',
+    'brave.serviceName' => 'Brave Collective TimerBoard',
 
     // NEUCORE
     'CORE_URL' => getenv('CORE_URL'),

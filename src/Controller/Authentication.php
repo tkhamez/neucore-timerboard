@@ -28,13 +28,13 @@ class Authentication extends AuthenticationController
         try {
             parent::auth($request, $response, $arguments);
         } catch(\Exception $e) {
-            # TODO log
+            # TODO log?
         }
 
         return $response->withRedirect('/');
     }
 
-    public function logout(ServerRequestInterface $request, Response $response, array $arguments): ResponseInterface
+    public function logout(ServerRequestInterface $request, Response $response): ResponseInterface
     {
         $this->sessionHandler->clear();
 

@@ -2,9 +2,11 @@
 
 namespace Brave\TimerBoard\Controller;
 
+use Brave\TimerBoard\View;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Slim\Http\Response;
 
 class Index
 {
@@ -18,9 +20,10 @@ class Index
         $this->container = $container;
     }
 
-    public function board(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    public function board(ServerRequestInterface $request, Response $response, array $args): ResponseInterface
     {
-        echo 'TimerBoard<br><a href="/logout">logout</a>';
+        $view = new View(ROOT_DIR . '/views/index.php');
+        $response->write($view->getContent());
 
         return $response;
     }
