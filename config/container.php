@@ -60,4 +60,23 @@ return [
             $container->get(\Brave\Sso\Basics\SessionHandlerInterface::class)
         );
     },
+
+    \Doctrine\ORM\EntityManagerInterface::class => function (\Psr\Container\ContainerInterface $container) {
+        $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
+            [ROOT_DIR . '/src/Entity'],
+            true
+        );
+        $em = \Doctrine\ORM\EntityManager::create(
+            ['url' => $container->get('settings')['DB_URL']],
+            $config
+        );
+
+        return $em;
+    },
+
+    \Brave\TimerBoard\Repository\EventRepository::class => function (\Psr\Container\ContainerInterface $container) {
+        $em = $container->get(\Doctrine\ORM\EntityManagerInterface::class);
+        $class = $em->getMetadataFactory()->getMetadataFor(\Brave\TimerBoard\Entity\Event::class);
+        return new \Brave\TimerBoard\Repository\EventRepository($em, $class);
+    },
 ];

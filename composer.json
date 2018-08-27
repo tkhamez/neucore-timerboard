@@ -20,7 +20,7 @@
         "bravecollective/web-ui": "*@dev",
         "tkhamez/slim-role-auth": "@dev",
         "vlucas/phpdotenv": "^2.4",
-        "doctrine/dbal": "2.5",
+        "doctrine/orm": "^2.0",
         "bryanjhv/slim-session": "^3.5"
     },
     "config": {
@@ -28,5 +28,13 @@
         "platform": {
             "php": "7.0.0"
         }
+    },
+    "scripts": {
+        "db:update": [
+            "doctrine orm:schema-tool:update --force"
+        ],
+        "compile": [
+            "doctrine orm:schema-tool:update --force"
+        ]
     }
 }

@@ -1,5 +1,6 @@
 <?php
 /* @var $this \Brave\TimerBoard\View */
+/* @var $events \Brave\TimerBoard\Entity\Event[] */
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,13 +13,13 @@
 
 <body class="container-fluid">
     <header class="navbar navbar-dark bg-brave shadow-1 mb-3">
-        <a class="navbar-brand" href="#">Brave Collective - TimerBoard</a>
+        <span class="navbar-brand">Brave Collective - TimerBoard</span>
         <form class="form-inline my-2 my-lg-0">
             <a class="btn btn-outline-success my-2 my-sm-0" href="/logout">Logout</a>
         </form>
     </header>
 
-    <h1 class="text-light">Active Timers</h1>
+    <h1 class="text-light">Timers</h1>
 
     <table class="table table-dark">
         <thead>
@@ -28,10 +29,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row"></th>
-                <td></td>
-            </tr>
+            <?php foreach ($events as $event) { ?>
+                <tr>
+                    <th scope="row"><?= $this->esc($event->name) ?></th>
+                    <td></td>
+                </tr>
+            <?php } ?>
         </tbody>
     </table>
 

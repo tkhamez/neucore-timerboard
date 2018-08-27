@@ -12,7 +12,7 @@ class Bootstrap
     /**
      * @var ContainerInterface
      */
-    protected $container;
+    private $container;
 
     /**
      * Bootstrap constructor
@@ -24,8 +24,12 @@ class Bootstrap
             $dotEnv->load();
         }
 
-        $container = new \Slim\Container(require_once(ROOT_DIR . '/config/container.php'));
-        $this->container = $container;
+        $this->container = new \Slim\Container(require_once(ROOT_DIR . '/config/container.php'));
+    }
+
+    public function getContainer(): ContainerInterface
+    {
+        return $this->container;
     }
 
     /**
