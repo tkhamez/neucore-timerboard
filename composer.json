@@ -8,16 +8,17 @@
     },
     "repositories": [
         { "type": "git", "url": "https://github.com/bravecollective/neucore-api.git" },
-        { "type": "git", "url": "https://github.com/bravecollective/sso-basics.git" },
-        { "type": "git", "url": "https://github.com/bravecollective/web-ui.git" },
+        { "type": "git", "url": "https://github.com/tkhamez/sso-basics.git" },
+        { "type": "git", "url": "https://github.com/tkhamez/web-ui.git" },
         { "type": "git", "url": "https://github.com/tkhamez/slim-role-auth.git"  }
     ],
     "require": {
         "php": "^7.0",
+        "ext-json": "*",
         "frontpack/composer-assets-plugin": "^0.9",
         "bravecollective/neucore-api": "*@dev",
         "bravecollective/sso-basics": "*@dev",
-        "bravecollective/web-ui": "*@dev",
+        "bravecollective/web-ui": "dev-dev",
         "tkhamez/slim-role-auth": "0.2.0",
         "vlucas/phpdotenv": "^2.4",
         "doctrine/orm": "^2.0",

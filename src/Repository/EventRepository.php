@@ -49,7 +49,7 @@ class EventRepository extends EntityRepository
             ->createQuery(
                 'SELECT COUNT(e) AS num
                 FROM Brave\TimerBoard\Entity\Event e 
-                WHERE e.eventTime < CURRENT_TIMESTAMP()'
+                WHERE e.eventTime < CURRENT_TIMESTAMP() OR e.eventTime IS NULL'
             )
             ->getResult();
 

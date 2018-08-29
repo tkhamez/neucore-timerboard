@@ -37,23 +37,19 @@ class RoleProvider implements RoleProviderInterface
      */
     public function getRoles(ServerRequestInterface $request = null)
     {
-        #$this->session->set('coreGroups', null);
-
         /* @var $eveAuth \Brave\Sso\Basics\EveAuthentication */
         $eveAuth = $this->session->get('eveAuth', null);
         if ($eveAuth === null) {
             return [];
         }
 
-        $charId = $eveAuth->getCharacterId();
-
-        $coreGroups = $this->session->get('coreGroups', []);
-        if (isset($coreGroups[$charId])) {
-            return $coreGroups[$charId];
+        $coreGroups = $this->session->get('coreGroups', null);
+        if (is_array($coreGroups)) {
+            return $coreGroups;
         }
 
         try {
-            $groups = $this->api->groupsV1($charId);
+            $groups = $this->api->groupsV1($eveAuth->getCharacterId());
         } catch (\Exception $e) {
             return [];
         }
@@ -62,10 +58,13 @@ class RoleProvider implements RoleProviderInterface
         foreach ($groups as $group) {
             $roles[] = $group->getName();
         }
-
-        $coreGroups[$charId] = $roles;
-        $this->session->set('coreGroups', $coreGroups);
+        $this->session->set('coreGroups', $roles);
 
         return $roles;
+    }
+
+    public function clear()
+    {
+        $this->session->set('coreGroups', null);
     }
 }

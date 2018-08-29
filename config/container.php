@@ -80,11 +80,17 @@ return [
         return new \Brave\TimerBoard\Repository\EventRepository($em, $class);
     },
 
+    \Brave\TimerBoard\Repository\SystemRepository::class => function (\Psr\Container\ContainerInterface $container) {
+        $em = $container->get(\Doctrine\ORM\EntityManagerInterface::class);
+        $class = $em->getMetadataFactory()->getMetadataFor(\Brave\TimerBoard\Entity\System::class);
+        return new \Brave\TimerBoard\Repository\SystemRepository($em, $class);
+    },
+
     \Brave\TimerBoard\Security::class => function (\Psr\Container\ContainerInterface $container) {
         return new \Brave\TimerBoard\Security(
             $container->get('settings'),
             $container->get(\Brave\TimerBoard\RoleProvider::class),
-            $container
+            $container->get(\Brave\Sso\Basics\SessionHandlerInterface::class)
         );
     },
 ];

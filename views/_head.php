@@ -8,7 +8,10 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta content="initial-scale=1, shrink-to-fit=no, width=device-width" name="viewport">
     <title>Brave Collective - TimerBoard</title>
+    <link rel="stylesheet" href="/vendor/easy-autocomplete.min.css">
+    <link rel="stylesheet" href="/vendor/easy-autocomplete.themes.min.css">
     <link rel="stylesheet" href="/assets/bravecollective/web-ui/css/brave.css">
 </head>
 

@@ -2,7 +2,7 @@
 namespace Brave\TimerBoard\Entity;
 
 /**
- * @Entity(repositoryClass="Brave\TimerBoard\Repository\EventRepository")
+ * @Entity
  * @Table(name="events")
  */
 class Event
@@ -16,10 +16,11 @@ class Event
     private $id;
 
     /**
-     * @Column(type="string", length=255, nullable=true)
-     * @var string
+     * @ManyToOne(targetEntity="System", inversedBy="events")
+     * @JoinColumn(name="system", referencedColumnName="name")
+     * @var System
      */
-    public $location;
+    private $system;
 
     /**
      * @Column(type="string", length=255, nullable=true)
@@ -40,6 +41,12 @@ class Event
     public $type;
 
     /**
+     * @Column(type="string", length=255, nullable=true)
+     * @var string
+     */
+    public $standing;
+
+    /**
      * @Column(type="datetime", name="event_time", nullable=true)
      * @var \DateTime
      */
@@ -54,5 +61,20 @@ class Event
     public function getId()
     {
         return $this->id;
+    }
+
+    public function setSystem(System $system = null): self
+    {
+        $this->system = $system;
+
+        return $this;
+    }
+
+    /**
+     * @return System|null
+     */
+    public function getSystem()
+    {
+        return $this->system;
     }
 }

@@ -10,7 +10,7 @@ class Index extends BaseController
 {
     public function board(Request $request, Response $response): ResponseInterface
     {
-        $limit = 20;
+        $limit = 30;
         $page = (int) $request->getParam('page', 1);
         $page = $page < 1 ? 1 : $page;
         $from = ($page - 1) * $limit;
@@ -19,13 +19,14 @@ class Index extends BaseController
         $expiredEvents = $this->eventRepository->findExpiredTimers($from, $limit);
 
         $num = $this->eventRepository->numberOfExpiredTimers();
-        $pages = floor($num / $limit);
+        $pages = ceil($num / $limit);
 
         $view = new View(ROOT_DIR . '/views/index.php');
         $view->addVar('isAdmin', $this->security->isAdmin());
         $view->addVar('authName', $this->security->getAuthorizedName());
         $view->addVar('activeEvents', $activeEvents);
         $view->addVar('expiredEvents', $expiredEvents);
+        $view->addVar('currentPage', $page);
         $view->addVar('pages', $pages);
 
         $response->write($view->getContent());

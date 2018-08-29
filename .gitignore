@@ -1,7 +1,7 @@
 .env
-vendor
-web/assets
-
+/node_modules
+/vendor
+/web/assets
+/web/vendor
 /.idea
 /.vagrant
-

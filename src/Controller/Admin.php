@@ -15,6 +15,7 @@ class Admin extends BaseController
         $view = new View(ROOT_DIR . '/views/admin.php');
         $view->addVar('isAdmin', $this->security->isAdmin());
         $view->addVar('authName', $this->security->getAuthorizedName());
+        $view->addVar('systemNames', $this->getSystemNames());
         $view->addVar('event', $this->getEvent($args));
 
         $response->write($view->getContent());
@@ -26,23 +27,45 @@ class Admin extends BaseController
     {
         $event = $this->getEvent($args);
 
-        $event->location = (string) $request->getParam('location');
+        $event->setSystem($this->getSystem($request));
         $event->priority = (string) $request->getParam('priority');
         $event->type = (string) $request->getParam('type');
         $event->structure = (string) $request->getParam('structure');
-        try {
-            $dateTime = new \DateTime(
-                (string) $request->getParam('date') . ' ' . (string) $request->getParam('time'));
-        } catch (\Exception $e) {
-            $dateTime = new \DateTime('@0');
-        }
-        $event->eventTime = $dateTime;
-        $event->result = $request->getParam('result');
+        $event->standing = (string) $request->getParam('standing');
+        $event->eventTime = $this->getDateFromRequest($request);
+        $event->result = (string) $request->getParam('result');
 
         $this->entityManager->persist($event);
         $this->entityManager->flush();
 
         return $response->withRedirect('/');
+    }
+
+    public function delete(Request $request, Response $response, array $args): ResponseInterface
+    {
+        $event = $this->getEvent($args);
+        if ($event) {
+            $this->entityManager->remove($event);
+            $this->entityManager->flush();
+        }
+
+        return $response->withRedirect('/');
+    }
+
+    /**
+     * @return string[]
+     */
+    private function getSystemNames()
+    {
+        /* @var $systems \Brave\TimerBoard\Entity\System[] */
+        $systems = $this->systemRepository->findAll();
+
+        $systemNames = [];
+        foreach ($systems as $system) {
+            $systemNames[] = $system->name;
+        }
+
+        return $systemNames;
     }
 
     private function getEvent(array $args): Event
@@ -56,5 +79,35 @@ class Admin extends BaseController
         }
 
         return $event;
+    }
+
+    private function getDateFromRequest(Request $request): \DateTime
+    {
+        $days = trim((string) $request->getParam('days'));
+        $hours = trim((string) $request->getParam('hours'));
+        $minutes = trim((string) $request->getParam('minutes'));
+        if ($days . $hours . $minutes !== '') {
+            $dateStr = '';
+            $dateStr .= $days !== ''    ? " +$days day" : '';
+            $dateStr .= $hours !== ''   ? " +$hours hour" : '';
+            $dateStr .= $minutes !== '' ? " +$minutes minute" : '';
+        } else {
+            $dateStr = (string) $request->getParam('date') . ' ' . (string) $request->getParam('time');
+        }
+
+        try {
+            $dateTime = new \DateTime($dateStr);
+        } catch (\Exception $e) {
+            $dateTime = new \DateTime('@0');
+        }
+
+        return $dateTime;
+    }
+
+    private function getSystem(Request $request)
+    {
+        $name = (string) $request->getParam('system');
+
+        return $this->systemRepository->find($name);
     }
 }

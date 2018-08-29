@@ -2,6 +2,7 @@
 namespace Brave\TimerBoard\Controller;
 
 use Brave\TimerBoard\Repository\EventRepository;
+use Brave\TimerBoard\Repository\SystemRepository;
 use Brave\TimerBoard\Security;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Container\ContainerInterface;
@@ -19,6 +20,11 @@ abstract class BaseController
     protected $eventRepository;
 
     /**
+     * @var SystemRepository
+     */
+    protected $systemRepository;
+
+    /**
      * @var Security
      */
     protected $security;
@@ -27,6 +33,7 @@ abstract class BaseController
     {
         $this->entityManager = $container->get(EntityManagerInterface::class);
         $this->eventRepository = $container->get(EventRepository::class);
+        $this->systemRepository = $container->get(SystemRepository::class);
         $this->security = $container->get(Security::class);
     }
 }

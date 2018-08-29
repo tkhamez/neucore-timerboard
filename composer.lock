@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "ab090636b539b33da29423e8ab3857ec",
+    "content-hash": "c7d621fef04a5f1c3b411162ffa9ff2b",
     "packages": [
         {
             "name": "bravecollective/neucore-api",
@@ -60,12 +60,13 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/bravecollective/sso-basics.git",
-                "reference": "be53cb2895deeb4946219065f263244b6959c925"
+                "url": "https://github.com/tkhamez/sso-basics.git",
+                "reference": "e376ac90339a4a904c3071149ce54b15f564bb2c"
             },
             "require": {
                 "league/oauth2-client": "^2.2",
-                "paragonie/random_compat": "^2.0"
+                "paragonie/random_compat": "^2.0",
+                "psr/container": "^1.0"
             },
             "type": "library",
             "autoload": {
@@ -73,24 +74,25 @@
                     "Brave\\Sso\\Basics\\": "src"
                 }
             },
-            "time": "2018-06-07T17:51:33+00:00"
+            "time": "2018-08-28T16:03:44+00:00"
         },
         {
             "name": "bravecollective/web-ui",
-            "version": "dev-master",
+            "version": "dev-dev",
             "source": {
                 "type": "git",
-                "url": "https://github.com/bravecollective/web-ui.git",
-                "reference": "0be6bbe254d0e5cd183e2a2ab5da5726161d53a4"
+                "url": "https://github.com/tkhamez/web-ui.git",
+                "reference": "81111af8f6049c982da61a4ea8f2befa11ffedaa"
             },
             "type": "library",
             "extra": {
                 "assets-files": [
                     "dist/images",
-                    "dist/css"
+                    "dist/css",
+                    "dist/js"
                 ]
             },
-            "time": "2018-05-20T20:27:37+00:00"
+            "time": "2018-08-28T21:26:01+00:00"
         },
         {
             "name": "bryanjhv/slim-session",
@@ -1707,7 +1709,8 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.0"
+        "php": "^7.0",
+        "ext-json": "*"
     },
     "platform-dev": [],
     "platform-overrides": {
