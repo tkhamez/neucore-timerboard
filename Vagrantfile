@@ -22,6 +22,11 @@ Vagrant.configure("2") do |config|
 
         apt-get update
         apt-get upgrade -y
+
+        # install node + npm
+        apt-get install -y nodejs npm
+        npm install -y npm@5.6 -g
+        apt-get remove -y npm
         apt-get autoremove -y
 
         # install PHP + Composer
@@ -62,9 +67,12 @@ Vagrant.configure("2") do |config|
     # run app setup as an unprivileged user
     config.vm.provision "up", type: "shell", run: "always", privileged: false, inline: <<-SHELL
         cd /var/www/timerboard
-        cp .env.dist .env
+        if [ ! -f .env ]; then
+            cp .env.dist .env
+        fi
         composer install
         composer compile
+        npm install
 
         echo " "
         echo "--------------------------------------------------------------------------------"
