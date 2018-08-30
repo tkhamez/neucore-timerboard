@@ -3,11 +3,10 @@
  * Required configuration for vendor/bin/doctrine.
  */
 
-require __DIR__ . '/../vendor/autoload.php';
+define('ROOT_DIR', realpath(__DIR__ . '/..'));
+require ROOT_DIR . '/vendor/autoload.php';
 
-define('ROOT_DIR', realpath(__DIR__ . '/../'));
 $bootstrap = new \Brave\TimerBoard\Bootstrap();
-
 $em = $bootstrap->getContainer()->get(\Doctrine\ORM\EntityManagerInterface::class);
 
 $helpers = new \Symfony\Component\Console\Helper\HelperSet(array(

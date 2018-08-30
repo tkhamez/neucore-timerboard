@@ -1,7 +1,6 @@
 <?php
-require_once(__DIR__ . '/../vendor/autoload.php');
-
-define('ROOT_DIR', realpath(__DIR__ . '/../'));
+define('ROOT_DIR', realpath(__DIR__ . '/..'));
+require_once(ROOT_DIR . '/vendor/autoload.php');
 
 $bootstrap = new \Brave\TimerBoard\Bootstrap();
 $bootstrap->run();

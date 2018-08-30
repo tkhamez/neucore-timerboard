@@ -1,4 +1,4 @@
-# Brave TimerBoard
+# Brave Collective TimerBoard
 
 ## Install
 

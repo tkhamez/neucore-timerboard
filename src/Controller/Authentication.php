@@ -21,6 +21,11 @@ class Authentication extends AuthenticationController
      */
     private $roleProvider;
 
+    /**
+     * @var string
+     */
+    protected $template = ROOT_DIR . '/views/sso_page.html';
+
     public function __construct(ContainerInterface $container)
     {
         parent::__construct($container);

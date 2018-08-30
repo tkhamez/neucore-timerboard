@@ -6,7 +6,7 @@ return function (\Psr\Container\ContainerInterface $container)
     $app = $container[\Slim\App::class];
 
     // SSO via sso-basics package
-    $app->get('/login', \Brave\Sso\Basics\AuthenticationController::class . ':index');
+    $app->get('/login', \Brave\TimerBoard\Controller\Authentication::class . ':index');
     $app->get('/auth',  \Brave\TimerBoard\Controller\Authentication::class . ':callback');
 
     // app routes
