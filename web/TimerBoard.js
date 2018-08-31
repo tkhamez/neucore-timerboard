@@ -37,14 +37,17 @@ var TimerBoard = (function($, moment) {
             if (time !== '') {
                 var date = new Date(time * 1000);
                 $col.text(date.toLocaleString(navigator.language, {
-                    timeZoneName: 'short',
-                    year: 'numeric',
+                    year: '2-digit',
                     month: 'short',
                     weekday: 'short',
                     day: 'numeric',
                     hour: 'numeric',
                     minute: 'numeric'
                 }));
+                $col.attr('title', date.toLocaleString(navigator.language, {
+                    year: '2-digit',
+                    timeZoneName: 'short'
+                }).split(' ')[1]); // it's like "18, MESZ" or "18년 GMT+2"
             }
         });
     }

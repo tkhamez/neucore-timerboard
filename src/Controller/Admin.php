@@ -34,6 +34,7 @@ class Admin extends BaseController
         $event->standing = (string) $request->getParam('standing');
         $event->eventTime = $this->getDateFromRequest($request);
         $event->result = (string) $request->getParam('result');
+        $event->notes = (string) $request->getParam('notes');
 
         $this->entityManager->persist($event);
         $this->entityManager->flush();

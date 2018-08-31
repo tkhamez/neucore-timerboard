@@ -19,8 +19,8 @@ foreach ([$activeEvents, $expiredEvents] as $idx => $events) {
         <?= $idx === 0 ? 'Active' : 'Expired' ?>
         Timers
     </h3>
-    <table class="table table-dark">
-        <thead>
+    <table class="table table-dark table-hover table-sm table-timer-board">
+        <thead class="thead-light">
             <tr>
                 <th scope="col">System</th>
                 <!-- <th scope="col">Constellation</th> -->
@@ -33,6 +33,7 @@ foreach ([$activeEvents, $expiredEvents] as $idx => $events) {
                 <th scope="col">Local Time</th>
                 <th scope="col">EVE Time</th>
                 <th scope="col">Result</th>
+                <th scope="col">Notes</th>
                 <?php if ($isAdmin) { ?>
                     <th scope="col">Action</th>
                 <?php } ?>
@@ -65,13 +66,14 @@ foreach ([$activeEvents, $expiredEvents] as $idx => $events) {
                     <td><?= $this->esc($event->type) ?></td>
                     <td><?= $this->esc($event->standing) ?></td>
                     <td class="time-relative" data-time="<?= $time ?>"></td>
-                    <td class="time-local" data-time="<?= $time ?>"></td>
-                    <td>
+                    <td class="time-local" data-time="<?= $time ?>" title=""></td>
+                    <td title="UTC">
                         <a href="http://time.nakamura-labs.com/#<?= $time ?>" target="_blank">
                             <?= $timeFormat ?>
                         </a>
                     </td>
                     <td><?= $this->esc($event->result) ?></td>
+                    <td><?= $this->esc($event->notes) ?></td>
                     <?php if ($isAdmin) { ?>
                         <td>
                             <a href="/admin/<?= (int) $event->getId() ?>">edit</a>

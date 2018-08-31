@@ -16,7 +16,7 @@ include '_head.php'; // needs $isAdmin and $authName variables
     <div class="form-group">
         <label class="text-light" for="system">System</label>
         <input type="text" class="form-control bg-light-1 text-dark" id="system" name="system"
-               required value="<?= $event->getSystem() ? $event->getSystem()->name : '' ?>"
+               required value="<?= $event->getSystem() ? $this->esc($event->getSystem()->name) : '' ?>"
                data-systems="<?= $this->esc(json_encode($systemNames)) ?>">
         <small class="form-text text-white-50">Enter the system name, e. g. GE-8JV</small>
     </div>
@@ -29,7 +29,6 @@ include '_head.php'; // needs $isAdmin and $authName variables
             <option <?= $event->priority === 'High' ? 'selected' : '' ?>>High</option>
             <option <?= $event->priority === 'Critical' ? 'selected' : '' ?>>Critical</option>
         </select>
-        <small class="form-text text-white-50">Enter the priority, e. g. Important</small>
     </div>
     <div class="form-group">
         <label class="text-light" for="structure">Structure</label>
@@ -49,29 +48,26 @@ include '_head.php'; // needs $isAdmin and $authName variables
             <option <?= $event->structure === 'Keepstar' ? 'selected' : '' ?>>Keepstar</option>
             <option <?= $event->structure === 'other' ? 'selected' : '' ?>>other</option>
         </select>
-        <small class="form-text text-white-50">Enter the structure, e. g. Citadel [M]</small>
     </div>
     <div class="form-group">
         <label class="text-light" for="type">Type</label>
-        <select type="text" class="form-control bg-light-1" id="type" name="type" required>
+        <select class="form-control bg-light-1" id="type" name="type" required>
             <option value="">please select</option>
             <option <?= $event->type === 'Shield' ? 'selected' : '' ?>>Shield</option>
             <option <?= $event->type === 'Armor' ? 'selected' : '' ?>>Armor</option>
             <option <?= $event->type === 'Structure' ? 'selected' : '' ?>>Structure</option>
             <option <?= $event->type === 'other' ? 'selected' : '' ?>>other</option>
         </select>
-        <small class="form-text text-white-50">Enter the type, e. g. Armor</small>
     </div>
     <div class="form-group">
         <label class="text-light" for="standing">Standings</label>
-        <select type="text" class="form-control bg-light-1" id="standing" name="standing" required>
+        <select class="form-control bg-light-1" id="standing" name="standing" required>
             <option value="">please select</option>
             <option <?= $event->standing === 'friendly' ? 'selected' : '' ?>>friendly</option>
             <option <?= $event->standing === 'enemy' ? 'selected' : '' ?>>enemy</option>
             <option <?= $event->standing === 'neutral' ? 'selected' : '' ?>>neutral</option>
             <option <?= $event->standing === 'other' ? 'selected' : '' ?>>other</option>
         </select>
-        <small class="form-text text-white-50">Enter the type, e. g. Armor</small>
     </div>
     <div class="form-row">
         <div class="col">
@@ -85,7 +81,7 @@ include '_head.php'; // needs $isAdmin and $authName variables
                 </small>
                 <input type="text" class="form-control bg-light-1" id="eventTime" name="time"
                        maxlength="5" pattern="[0-9]{1,2}:[0-9]{2}"
-                       value="<?= $event->eventTime ? $event->eventTime->format('H:i') : '' ?>">
+                       value="<?= $event->eventTime ? $this->esc($event->eventTime->format('H:i')) : '' ?>">
                 <small class="form-text text-white-50 mt-0">Enter the time, format e.g.: 16:05</small>
             </div>
         </div>
@@ -104,12 +100,17 @@ include '_head.php'; // needs $isAdmin and $authName variables
     </div>
     <div class="form-group">
         <label class="text-light" for="result">Result</label>
-        <select type="text" class="form-control bg-light-1" id="result" name="result">
+        <select class="form-control bg-light-1" id="result" name="result">
             <option <?= $event->result === 'No data' ? 'selected' : '' ?>>No data</option>
             <option <?= $event->result === 'Win' ? 'selected' : '' ?>>Win</option>
             <option <?= $event->result === 'Loss' ? 'selected' : '' ?>>Loss</option>
         </select>
-        <small class="form-text text-white-50">Enter the result, e. g. win</small>
+    </div>
+    <div class="form-group">
+        <label class="text-light" for="result">Notes</label>
+        <input type="text" class="form-control bg-light-1" id="notes" name="notes"
+               value="<?= $this->esc($event->notes) ?>">
+        <small class="form-text text-white-50">Optional notes</small>
     </div>
     <button type="submit" class="btn btn-primary">Save</button>
 </form>

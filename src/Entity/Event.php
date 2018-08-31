@@ -58,6 +58,12 @@ class Event
      */
     public $result; // win/loss
 
+    /**
+     * @Column(type="string", length=255, nullable=true)
+     * @var string
+     */
+    public $notes;
+
     public function getId()
     {
         return $this->id;

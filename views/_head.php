@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/vendor/easy-autocomplete.min.css">
     <link rel="stylesheet" href="/vendor/easy-autocomplete.themes.min.css">
     <link rel="stylesheet" href="/assets/bravecollective/web-ui/css/brave.css">
+    <link rel="stylesheet" href="/timer-board.css">
 </head>
 
 <body class="container-fluid">
