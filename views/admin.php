@@ -15,7 +15,7 @@ include '_head.php'; // needs $isAdmin and $authName variables
 <form class="col mb-3 pt-3 pb-3 bg-dark text-light" action="/admin/<?= (int) $event->getId() ?>" method="post">
     <div class="form-group">
         <label class="text-light" for="system">System</label>
-        <input type="text" class="form-control bg-light-1 text-dark" id="system" name="system"
+        <input type="text" class="form-control bg-light-1 text-dark" id="system" name="system" maxlength="255"
                required value="<?= $event->getSystem() ? $this->esc($event->getSystem()->name) : '' ?>"
                data-systems="<?= $this->esc(json_encode($systemNames)) ?>">
         <small class="form-text text-white-50">Enter the system name, e. g. GE-8JV</small>
@@ -108,7 +108,7 @@ include '_head.php'; // needs $isAdmin and $authName variables
     </div>
     <div class="form-group">
         <label class="text-light" for="result">Notes</label>
-        <input type="text" class="form-control bg-light-1" id="notes" name="notes"
+        <input type="text" class="form-control bg-light-1" id="notes" name="notes" maxlength="255"
                value="<?= $this->esc($event->notes) ?>">
         <small class="form-text text-white-50">Optional notes</small>
     </div>
