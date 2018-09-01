@@ -61,7 +61,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/tkhamez/sso-basics.git",
-                "reference": "e376ac90339a4a904c3071149ce54b15f564bb2c"
+                "reference": "534c032776bca73b33d92733909d05408a129464"
             },
             "require": {
                 "league/oauth2-client": "^2.2",
@@ -74,7 +74,7 @@
                     "Brave\\Sso\\Basics\\": "src"
                 }
             },
-            "time": "2018-08-28T16:03:44+00:00"
+            "time": "2018-09-01T15:36:23+00:00"
         },
         {
             "name": "bravecollective/web-ui",

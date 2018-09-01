@@ -8,6 +8,8 @@
 * Import `scripts/systems.sql`
 * Execute `npm install`
 
+Set the php.ini settings `log_errors` and `error_log` to log errors. 
+
 ### Heroku
 
 * Add build packs:

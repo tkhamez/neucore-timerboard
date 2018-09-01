@@ -51,6 +51,7 @@ class RoleProvider implements RoleProviderInterface
         try {
             $groups = $this->api->groupsV1($eveAuth->getCharacterId());
         } catch (\Exception $e) {
+            error_log((string)$e);
             return [];
         }
 

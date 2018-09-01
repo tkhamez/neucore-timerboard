@@ -2,6 +2,7 @@
 namespace Brave\TimerBoard;
 
 use Dotenv\Dotenv;
+use Interop\Container\Exception\ContainerException;
 use Psr\Container\ContainerInterface;
 use Slim\App;
 use Tkhamez\Slim\RoleAuth\RoleMiddleware;
@@ -15,10 +16,13 @@ class Bootstrap
     private $container;
 
     /**
-     * @throws \Psr\Container\ContainerExceptionInterface
+     * @var string prod or env
      */
+    private $appEnv = 'prod';
+
     public function __construct()
     {
+        error_reporting(E_ALL);
         date_default_timezone_set('UTC');
 
         if (is_readable(ROOT_DIR . '/.env')) {
@@ -27,11 +31,6 @@ class Bootstrap
         }
 
         $this->container = new \Slim\Container(require_once(ROOT_DIR . '/config/container.php'));
-
-        error_reporting(E_ALL);
-        if ($this->container->get('settings')['app.env'] === 'dev') {
-            ini_set('display_errors', '1');
-        }
     }
 
     public function getContainer(): ContainerInterface
@@ -40,21 +39,27 @@ class Bootstrap
     }
 
     /**
-     * @throws \Psr\Container\ContainerExceptionInterface
+     * @return void
      */
     public function run()
     {
         try {
+            $appEnv = (string) $this->container->get('settings')['app.env'];
+            $this->appEnv = $appEnv === 'dev' ? 'dev' : 'prod';
+
+            if ($this->appEnv === 'dev') {
+                ini_set('display_errors', '1');
+            } else {
+                ini_set('display_errors', '0');
+            }
+
             $app = $this->enableRoutes();
             $this->addMiddleware($app);
             $app->run();
+        } catch(ContainerException $e) {
+            $this->handleException($e);
         } catch(\Exception $e) {
-            if ($this->container->get('settings')['app.env'] === 'dev') {
-                echo '<pre>' . (string)$e . '</pre>';
-            } else {
-                echo 'Error.';
-            }
-            // TODO log?
+            $this->handleException($e);
         }
     }
 
@@ -86,5 +91,15 @@ class Bootstrap
             'autorefresh' => true,
             'lifetime' => '1 hour'
         ]));
+    }
+
+    private function handleException(\Exception $e)
+    {
+        if ($this->appEnv === 'dev') {
+            echo '<pre>' . (string)$e . '</pre>';
+        } else {
+            error_log((string)$e);
+            echo 'A website error has occurred. Sorry for the temporary inconvenience.';
+        }
     }
 }

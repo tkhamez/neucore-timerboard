@@ -39,7 +39,7 @@ class Authentication extends AuthenticationController
         try {
             parent::auth($request, $response, $arguments);
         } catch(\Exception $e) {
-            # TODO log?
+            error_log((string)$e);
         }
 
         $this->roleProvider->clear();
