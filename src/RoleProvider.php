@@ -44,8 +44,8 @@ class RoleProvider implements RoleProviderInterface
         }
 
         $coreGroups = $this->session->get('coreGroups', null);
-        if (is_array($coreGroups)) {
-            return $coreGroups;
+        if (is_array($coreGroups) && $coreGroups['time'] > (time() - 60*60)) {
+            return $coreGroups['roles'];
         }
 
         try {
@@ -59,7 +59,10 @@ class RoleProvider implements RoleProviderInterface
         foreach ($groups as $group) {
             $roles[] = $group->getName();
         }
-        $this->session->set('coreGroups', $roles);
+        $this->session->set('coreGroups', [
+            'time' => time(),
+            'roles' => $roles
+        ]);
 
         return $roles;
     }
