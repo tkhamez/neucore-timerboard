@@ -1,7 +1,5 @@
 <?php
 
-use Tkhamez\Slim\RoleAuth\RoleMiddleware;
-
 /**
  * Required roles (one of them) for routes.
  *
@@ -11,8 +9,8 @@ use Tkhamez\Slim\RoleAuth\RoleMiddleware;
  * see .env.dist
  */
 return [
-    '/login' => [RoleMiddleware::ROLE_ANY],
-    '/auth'  => [RoleMiddleware::ROLE_ANY],
+    '/login' => [\Brave\TimerBoard\RoleProvider::ROLE_ANY],
+    '/auth'  => [\Brave\TimerBoard\RoleProvider::ROLE_ANY],
     '/admin' => '{APP_GROUPS_WRITE}',
     '/'      => '{APP_GROUPS_READ}',
 ];

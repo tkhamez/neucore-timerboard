@@ -1,4 +1,5 @@
 <?php
+
 namespace Brave\TimerBoard;
 
 use Brave\NeucoreApi\Api\ApplicationApi;
@@ -11,6 +12,11 @@ use Tkhamez\Slim\RoleAuth\RoleProviderInterface;
  */
 class RoleProvider implements RoleProviderInterface
 {
+    /**
+     * The "any" role is always added.
+     */
+    const ROLE_ANY = 'any';
+
     /**
      * @var ApplicationApi
      */
@@ -37,28 +43,32 @@ class RoleProvider implements RoleProviderInterface
      */
     public function getRoles(ServerRequestInterface $request = null)
     {
+        $roles = [self::ROLE_ANY];
+
         /* @var $eveAuth \Brave\Sso\Basics\EveAuthentication */
         $eveAuth = $this->session->get('eveAuth', null);
         if ($eveAuth === null) {
-            return [];
+            return $roles;
         }
 
+        // try cache
         $coreGroups = $this->session->get('coreGroups', null);
         if (is_array($coreGroups) && $coreGroups['time'] > (time() - 60*60)) {
             return $coreGroups['roles'];
         }
 
+        // get groups from Core
         try {
             $groups = $this->api->groupsV1($eveAuth->getCharacterId());
         } catch (\Exception $e) {
             error_log((string)$e);
-            return [];
+            return $roles;
         }
-
-        $roles = [];
         foreach ($groups as $group) {
             $roles[] = $group->getName();
         }
+
+        // cache roles
         $this->session->set('coreGroups', [
             'time' => time(),
             'roles' => $roles
