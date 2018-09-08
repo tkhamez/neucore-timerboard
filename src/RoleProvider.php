@@ -13,9 +13,9 @@ use Tkhamez\Slim\RoleAuth\RoleProviderInterface;
 class RoleProvider implements RoleProviderInterface
 {
     /**
-     * The "any" role is always added.
+     * This role is always added.
      */
-    const ROLE_ANY = 'any';
+    const ROLE_ANY = 'role:any';
 
     /**
      * @var ApplicationApi
