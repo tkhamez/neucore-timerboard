@@ -8,8 +8,8 @@ Vagrant.configure("2") do |config|
     config.vm.box = "generic/ubuntu1804"
     config.vm.hostname = "timerboard"
 
-    config.vm.synced_folder "./", "/var/www/timerboard", type: "rsync", 
-        rsync__exclude: [".env", "vendor", ".idea", ".jshintrc"]
+    config.vm.synced_folder "./", "/var/www/timerboard", type: "rsync",
+        rsync__exclude: [".env", "vendor", ".idea", ".jshintrc", "node_modules"]
 
     config.ssh.username = 'vagrant'
     config.ssh.password = 'vagrant'
