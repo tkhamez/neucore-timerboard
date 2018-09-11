@@ -63,7 +63,7 @@ class Admin extends BaseController
 
         $systemNames = [];
         foreach ($systems as $system) {
-            $systemNames[] = $system->name . ', ' . $system->region;
+            $systemNames[] = $system->name;
         }
 
         return $systemNames;
