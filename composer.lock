@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "caf0532f038e38d69958c269323cda4b",
+    "content-hash": "52acb72da2c7c1ecc8fb4b5b809304ce",
     "packages": [
         {
             "name": "bravecollective/neucore-api",
@@ -60,8 +60,8 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/tkhamez/sso-basics.git",
-                "reference": "534c032776bca73b33d92733909d05408a129464"
+                "url": "https://github.com/bravecollective/sso-basics.git",
+                "reference": "bd425e0a649ee0f77aa9a60f2c144f87b4556640"
             },
             "require": {
                 "league/oauth2-client": "^2.2",
@@ -74,15 +74,15 @@
                     "Brave\\Sso\\Basics\\": "src"
                 }
             },
-            "time": "2018-09-01T15:36:23+00:00"
+            "time": "2018-09-11T18:40:28+00:00"
         },
         {
             "name": "bravecollective/web-ui",
-            "version": "dev-dev",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/tkhamez/web-ui.git",
-                "reference": "81111af8f6049c982da61a4ea8f2befa11ffedaa"
+                "url": "https://github.com/bravecollective/web-ui.git",
+                "reference": "4f1d8ef98ac4137b7988d2d21587fb4953b92d71"
             },
             "type": "library",
             "extra": {
@@ -92,7 +92,7 @@
                     "dist/js"
                 ]
             },
-            "time": "2018-08-28T21:26:01+00:00"
+            "time": "2018-09-11T18:41:26+00:00"
         },
         {
             "name": "bryanjhv/slim-session",
