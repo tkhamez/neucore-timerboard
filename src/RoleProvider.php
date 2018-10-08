@@ -3,6 +3,7 @@
 namespace Brave\TimerBoard;
 
 use Brave\NeucoreApi\Api\ApplicationApi;
+use Brave\NeucoreApi\ApiException;
 use Brave\Sso\Basics\SessionHandlerInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Tkhamez\Slim\RoleAuth\RoleProviderInterface;
@@ -60,8 +61,12 @@ class RoleProvider implements RoleProviderInterface
         // get groups from Core
         try {
             $groups = $this->api->groupsV1($eveAuth->getCharacterId());
-        } catch (\Exception $e) {
-            error_log((string)$e);
+        } catch (ApiException $ae) {
+            // Don't log 404 character not found error from Core (response body is empty).
+            // If the URL was not found the response body contains HTML (from Core)
+            if ($ae->getCode() !== 404 || $ae->getResponseBody() !== '') {
+                error_log((string)$ae);
+            }
             return $roles;
         }
         foreach ($groups as $group) {
