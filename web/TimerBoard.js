@@ -69,8 +69,10 @@ var TimerBoard = (function($, moment) {
                 var duration = moment.duration(Math.abs(diffTime), 'milliseconds');
                 $col.text(
                     (diffTime < 0 ? '-' : '') +
-                    duration.days() + "d " +
-                    duration.hours() + "h " +
+                    (duration.years() > 0 ? duration.years() + "y " : "") +
+                    (duration.months() > 0 ? duration.months() + "m " : "") +
+                    (duration.days() > 0 ? duration.days() + "d " : "") +
+                    (duration.hours() > 0 ? duration.hours() + "h " : "") +
                     duration.minutes() + "m"
                 );
             });
