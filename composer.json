@@ -17,7 +17,7 @@
         "ext-json": "*",
         "frontpack/composer-assets-plugin": "^0.9",
         "bravecollective/neucore-api": "*@dev",
-        "bravecollective/sso-basics": "*@dev",
+        "bravecollective/sso-basics": "0.1.1",
         "bravecollective/web-ui": "*@dev",
         "tkhamez/slim-role-auth": "0.3.0",
         "vlucas/phpdotenv": "^2.4",
