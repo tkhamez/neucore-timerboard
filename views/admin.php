@@ -12,6 +12,12 @@ include '_head.php'; // needs $isAdmin and $authName variables
     <?= $event->getId() ? 'Edit Event' : 'New event' ?>
 </h1>
 
+<div class="col mb-3 pt-3 pb-3 bg-dark text-light">
+    Last edited
+    by <?= $event->updatedBy ? $event->updatedBy : 'unknown' ?>,
+    at <?= $event->updatedAt ? $event->updatedAt->format('Y-m-d H:i:s') : 'unknown' ?> UTC
+</div>
+
 <form class="col mb-3 pt-3 pb-3 bg-dark text-light" action="/admin/<?= (int) $event->getId() ?>" method="post">
     <div class="form-group">
         <label class="text-light" for="system">System</label>
@@ -36,7 +42,6 @@ include '_head.php'; // needs $isAdmin and $authName variables
             <option value="">please select</option>
             <option <?= $event->structure === 'TCU' ? 'selected' : '' ?>>TCU</option>
             <option <?= $event->structure === 'IHub' ? 'selected' : '' ?>>IHub</option>
-            <option <?= $event->structure === 'POS' ? 'selected' : '' ?>>POS</option>
             <option <?= $event->structure === 'POCO' ? 'selected' : '' ?>>POCO</option>
             <option <?= $event->structure === 'Raitaru' ? 'selected' : '' ?>>Raitaru</option>
             <option <?= $event->structure === 'Azbel' ? 'selected' : '' ?>>Azbel</option>
@@ -46,6 +51,12 @@ include '_head.php'; // needs $isAdmin and $authName variables
             <option <?= $event->structure === 'Astrahus' ? 'selected' : '' ?>>Astrahus</option>
             <option <?= $event->structure === 'Fortizar' ? 'selected' : '' ?>>Fortizar</option>
             <option <?= $event->structure === 'Keepstar' ? 'selected' : '' ?>>Keepstar</option>
+            <option <?= $event->structure === 'Pharolynx' ? 'selected' : '' ?> value="Pharolynx">
+                Pharolynx Cyno Beacon</option>
+            <option <?= $event->structure === 'Tenebrex' ? 'selected' : '' ?> value="Tenebrex">
+                Tenebrex Cyno Jammer</option>
+            <option <?= $event->structure === 'Ansiblex' ? 'selected' : '' ?> value="Ansiblex">
+                Ansiblex Jump Gate</option>
             <option <?= $event->structure === 'other' ? 'selected' : '' ?>>other</option>
         </select>
     </div>
@@ -70,32 +81,30 @@ include '_head.php'; // needs $isAdmin and $authName variables
         </select>
     </div>
     <div class="form-row">
-        <div class="col">
-            <div class="form-group">
-                <label class="text-light" for="eventDate">EVE Date and time</label>
-                <input type="date" class="form-control bg-light-1" id="eventDate" name="date"
-                       maxlength="10" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
-                       value="<?= $event->eventTime ? $event->eventTime->format('Y-m-d') : '' ?>">
-                <small class="form-text text-white-50 mt-0 mb-2">
-                    Enter the date (format yyyy-mm-dd if browser does not support a date picker)
-                </small>
-                <input type="text" class="form-control bg-light-1" id="eventTime" name="time"
-                       maxlength="5" pattern="[0-9]{1,2}:[0-9]{2}"
-                       value="<?= $event->eventTime ? $this->esc($event->eventTime->format('H:i')) : '' ?>">
-                <small class="form-text text-white-50 mt-0">Enter the time, format e.g.: 16:05</small>
-            </div>
+        <div class="col form-group">
+            <label class="text-light" for="eventDate">EVE Date and time</label>
+            <input type="date" class="form-control bg-light-1" id="eventDate" name="date"
+                   maxlength="10" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+                   value="<?= $event->eventTime ? $event->eventTime->format('Y-m-d') : '' ?>">
+            <small class="form-text text-white-50 mt-0 mb-2">
+                Enter the date (format yyyy-mm-dd if browser does not support a date picker)
+            </small>
+            <input type="text" class="form-control bg-light-1" id="eventTime" name="time"
+                   maxlength="5" pattern="[0-9]{1,2}:[0-9]{2}"
+                   value="<?= $event->eventTime ? $this->esc($event->eventTime->format('H:i')) : '' ?>">
+            <label class="form-text text-white-50 mt-0" for="eventTime">Enter the time, format e.g.: 16:05</label>
         </div>
-        <div class="col">
-            <div class="form-group">
-                <label class="text-light" for="days">Or enter a relative time</label>
-                <small class="text-white-50">(has priority over date)</small>
-                <input type="text" class="form-control bg-light-1" id="days" name="days" pattern="[0-9]*" value="">
-                <small class="form-text text-white-50 mt-0 mb-2">days</small>
-                <input type="text" class="form-control bg-light-1" name="hours" pattern="[0-9]*" value="">
-                <small class="form-text text-white-50 mt-0 mb-2">hours</small>
-                <input type="text" class="form-control bg-light-1" name="minutes" pattern="[0-9]*" value="">
-                <small class="form-text text-white-50 mt-0">minutes</small>
-            </div>
+        <div class="col form-group">
+            <label class="text-light" for="days">Or enter a relative time</label>
+            <small class="text-white-50">(has priority over date)</small>
+            <input type="text" class="form-control bg-light-1" id="days" name="days" pattern="[0-9]*" value="">
+            <small class="form-text text-white-50 mt-0 mb-2">days</small>
+
+            <input type="text" class="form-control bg-light-1" name="hours" id="hours" pattern="[0-9]*" value="">
+            <label class="form-text text-white-50 mt-0 mb-2" for="hours">hours</label>
+
+            <input type="text" class="form-control bg-light-1" name="minutes" id="minutes" pattern="[0-9]*" value="">
+            <label class="form-text text-white-50 mt-0" for="minutes">minutes</label>
         </div>
     </div>
     <div class="form-group">
@@ -107,7 +116,7 @@ include '_head.php'; // needs $isAdmin and $authName variables
         </select>
     </div>
     <div class="form-group">
-        <label class="text-light" for="result">Notes</label>
+        <label class="text-light" for="notes">Notes</label>
         <input type="text" class="form-control bg-light-1" id="notes" name="notes" maxlength="255"
                value="<?= $this->esc($event->notes) ?>">
         <small class="form-text text-white-50">Optional notes</small>

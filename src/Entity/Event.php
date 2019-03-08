@@ -64,6 +64,18 @@ class Event
      */
     public $notes;
 
+    /**
+     * @Column(type="string", name="updated_by", length=255, nullable=true)
+     * @var string
+     */
+    public $updatedBy;
+
+    /**
+     * @Column(type="datetime", name="updated_at", nullable=true)
+     * @var \DateTime
+     */
+    public $updatedAt;
+
     public function getId()
     {
         return $this->id;

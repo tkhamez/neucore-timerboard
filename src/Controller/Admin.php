@@ -35,6 +35,8 @@ class Admin extends BaseController
         $event->eventTime = $this->getDateFromRequest($request);
         $event->result = (string) $request->getParam('result');
         $event->notes = (string) $request->getParam('notes');
+        $event->updatedAt = date_create();
+        $event->updatedBy = $this->security->getAuthorizedName();
 
         $this->entityManager->persist($event);
         $this->entityManager->flush();
@@ -96,11 +98,7 @@ class Admin extends BaseController
             $dateStr = (string) $request->getParam('date') . ' ' . (string) $request->getParam('time');
         }
 
-        try {
-            $dateTime = new \DateTime($dateStr);
-        } catch (\Exception $e) {
-            $dateTime = new \DateTime('@0');
-        }
+        $dateTime = date_create($dateStr);
 
         return $dateTime;
     }
