@@ -9,8 +9,16 @@ var TimerBoard = (function($, moment) {
             initSystemInput();
             showLocalTime();
             showRelativeTime();
-        }
+            $('[data-toggle="popover"]').popover();
+            initPopoverActions();
+        },
     };
+
+    function initPopoverActions() {
+        $('body').on('click', '.delete-event', function() {
+            $('form[name="delete-event"]').submit();
+        });
+    }
 
     function initSystemInput() {
         var $input = $('input[name="system"]');

@@ -64,6 +64,7 @@ include '_head.php'; // needs $isAdmin and $authName variables
         <label class="text-light" for="type">Type</label>
         <select class="form-control bg-light-1" id="type" name="type" required>
             <option value="">please select</option>
+            <option <?= $event->type === 'Anchoring' ? 'selected' : '' ?>>Anchoring</option>
             <option <?= $event->type === 'Shield' ? 'selected' : '' ?>>Shield</option>
             <option <?= $event->type === 'Armor' ? 'selected' : '' ?>>Armor</option>
             <option <?= $event->type === 'Structure' ? 'selected' : '' ?>>Structure</option>
@@ -124,10 +125,19 @@ include '_head.php'; // needs $isAdmin and $authName variables
     <button type="submit" class="btn btn-primary">Save</button>
 </form>
 
-<form class="col mb-3 pt-3 pb-3 bg-dark text-light"
-      action="/admin/delete/<?= (int) $event->getId() ?>" method="post">
-    <button type="submit" class="btn btn-danger">delete</button>
-</form>
+<?php if ($event->getId()) { ?>
+    <div class="col mb-3 pt-3 pb-3 bg-dark text-light">
+        <form action="/admin/delete/<?= (int) $event->getId() ?>" method="post" name="delete-event"></form>
+        <button type="submit" class="btn btn-danger" data-container="body" data-toggle="popover" data-placement="right"
+                data-trigger="focus" data-html="true" title="Are you sure?"
+                data-content='
+                    <span class="btn btn-xs btn-primary delete-event">Yes</span>
+                    <span class="btn btn-xs btn-default">no</span>'
+        >
+            delete
+        </button>
+    </div>
+<?php } ?>
 
 <?php
 include '_foot.php';
