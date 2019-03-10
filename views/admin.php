@@ -96,10 +96,10 @@ include '_head.php'; // needs $isAdmin and $authName variables
             <label class="form-text text-white-50 mt-0" for="eventTime">Enter the time, format e.g.: 16:05</label>
         </div>
         <div class="col form-group">
-            <label class="text-light" for="days">Or enter a relative time</label>
-            <small class="text-white-50">(has priority over date)</small>
+            <small class="text-light">Or enter a relative time (has priority over date)</small>
+
             <input type="text" class="form-control bg-light-1" id="days" name="days" pattern="[0-9]*" value="">
-            <small class="form-text text-white-50 mt-0 mb-2">days</small>
+            <label class="form-text text-white-50 mt-0 mb-2" for="days">days</label>
 
             <input type="text" class="form-control bg-light-1" name="hours" id="hours" pattern="[0-9]*" value="">
             <label class="form-text text-white-50 mt-0 mb-2" for="hours">hours</label>

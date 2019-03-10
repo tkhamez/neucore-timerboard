@@ -9,9 +9,9 @@
         </div>
     </footer>
 
-    <script src="/vendor/jquery.slim.min.js"></script>
-    <script src="/vendor/popper.min.js"></script>
-    <script src="/vendor/bootstrap.min.js"></script>
+    <script src="/assets/bravecollective/web-ui/js/jquery.slim.min.js"></script>
+    <script src="/assets/bravecollective/web-ui/js/popper.min.js"></script>
+    <script src="/assets/bravecollective/web-ui/js/bootstrap.min.js"></script>
     <script src="/assets/bravecollective/web-ui/js/material.min.js"></script>
     <script src="/vendor/jquery.easy-autocomplete.min.js"></script>
     <script src="/vendor/moment-with-locales.js"></script>
