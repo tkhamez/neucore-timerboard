@@ -1,6 +1,7 @@
 {
     "name": "bravecollective/timerboard",
     "type": "project",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Brave\\TimerBoard\\": "src"
