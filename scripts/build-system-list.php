@@ -22,7 +22,7 @@ file_put_contents(__DIR__.'/systems.sql', $sql);
 
 function fixNameAndEscape($name)
 {
-    // add spaces for before camel case, e. g. "SinqLaison" -> "Sinq Laison"
+    // add spaces before camel case, e. g. "SinqLaison" -> "Sinq Laison"
     $name = preg_replace('/([a-z])([A-Z])/', '$1 $2', $name);
 
     return "'".trim(str_replace(['\\', '"', "'", "\n", "\r"], ['\\\\', '\"', "\\'", ' ', ' '], $name))."'";
