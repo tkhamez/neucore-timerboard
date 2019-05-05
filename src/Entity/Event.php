@@ -17,7 +17,7 @@ class Event
 
     /**
      * @ManyToOne(targetEntity="System", inversedBy="events")
-     * @JoinColumn(name="system", referencedColumnName="name")
+     * @JoinColumn(name="solar_system", referencedColumnName="name")
      * @var System
      */
     private $system;
