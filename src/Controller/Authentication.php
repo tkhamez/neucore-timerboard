@@ -34,10 +34,10 @@ class Authentication extends AuthenticationController
         $this->roleProvider = $this->container->get(RoleProvider::class);
     }
 
-    public function callback(ServerRequestInterface $request, Response $response, array $arguments): ResponseInterface
+    public function callback(ServerRequestInterface $request, Response $response): ResponseInterface
     {
         try {
-            parent::auth($request, $response, $arguments);
+            parent::auth($request, $response, true);
         } catch(\Exception $e) {
             error_log((string)$e);
         }

@@ -1,18 +1,33 @@
 <?php
 
+use Brave\NeucoreApi\Api\ApplicationApi;
+use Brave\Sso\Basics\AuthenticationProvider;
+use Brave\TimerBoard\Entity\Event;
+use Brave\TimerBoard\Entity\System;
+use Brave\TimerBoard\Repository\EventRepository;
+use Brave\TimerBoard\Repository\SystemRepository;
+use Brave\TimerBoard\RoleProvider;
+use Brave\TimerBoard\Security;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\Setup;
+use League\OAuth2\Client\Provider\GenericProvider;
+use Psr\Container\ContainerInterface;
+use Slim\App;
+
 return [
     'settings' => require_once('config.php'),
 
-    \Slim\App::class => function (\Psr\Container\ContainerInterface $container)
+    App::class => function (ContainerInterface $container)
     {
         return new Slim\App($container);
     },
 
-    \League\OAuth2\Client\Provider\GenericProvider::class => function (\Psr\Container\ContainerInterface $container)
+    GenericProvider::class => function (ContainerInterface $container)
     {
         $settings = $container->get('settings');
 
-        return new \League\OAuth2\Client\Provider\GenericProvider([
+        return new GenericProvider([
             'clientId' => $settings['SSO_CLIENT_ID'],
             'clientSecret' => $settings['SSO_CLIENT_SECRET'],
             'redirectUri' => $settings['SSO_REDIRECTURI'],
@@ -22,25 +37,26 @@ return [
         ]);
     },
 
-    \Brave\Sso\Basics\AuthenticationProvider::class => function (\Psr\Container\ContainerInterface $container)
+    AuthenticationProvider::class => function (ContainerInterface $container)
     {
         $settings = $container->get('settings');
 
-        return new \Brave\Sso\Basics\AuthenticationProvider(
-            $container->get(\League\OAuth2\Client\Provider\GenericProvider::class),
-            explode(' ', $settings['SSO_SCOPES'])
+        return new AuthenticationProvider(
+            $container->get(GenericProvider::class),
+            explode(' ', $settings['SSO_SCOPES']),
+            $settings['SSO_URL_JWT_KEY_SET']
         );
     },
 
-    \Brave\TimerBoard\SessionHandler::class => function (\Psr\Container\ContainerInterface $container) {
+    \Brave\TimerBoard\SessionHandler::class => function (ContainerInterface $container) {
         return new \Brave\TimerBoard\SessionHandler($container);
     },
 
-    \Brave\Sso\Basics\SessionHandlerInterface::class => function (\Psr\Container\ContainerInterface $container) {
+    \Brave\Sso\Basics\SessionHandlerInterface::class => function (ContainerInterface $container) {
         return $container->get(\Brave\TimerBoard\SessionHandler::class);
     },
 
-    \Brave\NeucoreApi\Api\ApplicationApi::class => function (\Psr\Container\ContainerInterface $container) {
+    ApplicationApi::class => function (ContainerInterface $container) {
         $apiKey = base64_encode(
             $container->get('settings')['CORE_APP_ID'] .
             ':'.
@@ -51,22 +67,22 @@ return [
         $config->setApiKey('Authorization', $apiKey);
         $config->setApiKeyPrefix('Authorization', 'Bearer');
 
-        return new \Brave\NeucoreApi\Api\ApplicationApi(null, $config);
+        return new ApplicationApi(null, $config);
     },
 
-    \Brave\TimerBoard\RoleProvider::class => function (\Psr\Container\ContainerInterface $container) {
-        return new \Brave\TimerBoard\RoleProvider(
-            $container->get(\Brave\NeucoreApi\Api\ApplicationApi::class),
+    RoleProvider::class => function (ContainerInterface $container) {
+        return new RoleProvider(
+            $container->get(ApplicationApi::class),
             $container->get(\Brave\Sso\Basics\SessionHandlerInterface::class)
         );
     },
 
-    \Doctrine\ORM\EntityManagerInterface::class => function (\Psr\Container\ContainerInterface $container) {
-        $config = \Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
+    EntityManagerInterface::class => function (ContainerInterface $container) {
+        $config = Setup::createAnnotationMetadataConfiguration(
             [ROOT_DIR . '/src/Entity'],
             true
         );
-        $em = \Doctrine\ORM\EntityManager::create(
+        $em = EntityManager::create(
             ['url' => $container->get('settings')['DB_URL']],
             $config
         );
@@ -74,22 +90,22 @@ return [
         return $em;
     },
 
-    \Brave\TimerBoard\Repository\EventRepository::class => function (\Psr\Container\ContainerInterface $container) {
-        $em = $container->get(\Doctrine\ORM\EntityManagerInterface::class);
-        $class = $em->getMetadataFactory()->getMetadataFor(\Brave\TimerBoard\Entity\Event::class);
-        return new \Brave\TimerBoard\Repository\EventRepository($em, $class);
+    EventRepository::class => function (ContainerInterface $container) {
+        $em = $container->get(EntityManagerInterface::class);
+        $class = $em->getMetadataFactory()->getMetadataFor(Event::class);
+        return new EventRepository($em, $class);
     },
 
-    \Brave\TimerBoard\Repository\SystemRepository::class => function (\Psr\Container\ContainerInterface $container) {
-        $em = $container->get(\Doctrine\ORM\EntityManagerInterface::class);
-        $class = $em->getMetadataFactory()->getMetadataFor(\Brave\TimerBoard\Entity\System::class);
-        return new \Brave\TimerBoard\Repository\SystemRepository($em, $class);
+    SystemRepository::class => function (ContainerInterface $container) {
+        $em = $container->get(EntityManagerInterface::class);
+        $class = $em->getMetadataFactory()->getMetadataFor(System::class);
+        return new SystemRepository($em, $class);
     },
 
-    \Brave\TimerBoard\Security::class => function (\Psr\Container\ContainerInterface $container) {
-        return new \Brave\TimerBoard\Security(
+    Security::class => function (ContainerInterface $container) {
+        return new Security(
             $container->get('settings'),
-            $container->get(\Brave\TimerBoard\RoleProvider::class),
+            $container->get(RoleProvider::class),
             $container->get(\Brave\Sso\Basics\SessionHandlerInterface::class)
         );
     },

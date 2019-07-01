@@ -9,7 +9,7 @@
 
 Set the php.ini settings `log_errors` and `error_log` to log errors. 
 
-### Rebuild Frondend
+### Rebuild Frontend
 
 * Execute `npm install`
 

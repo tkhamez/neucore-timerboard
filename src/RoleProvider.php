@@ -60,11 +60,10 @@ class RoleProvider implements RoleProviderInterface
 
         // get groups from Core
         try {
-            $groups = $this->api->groupsV1($eveAuth->getCharacterId());
+            $groups = $this->api->groupsV2($eveAuth->getCharacterId());
         } catch (ApiException $ae) {
-            // Don't log 404 character not found error from Core (response body is empty).
-            // If the URL was not found the response body contains HTML (from Core)
-            if ($ae->getCode() !== 404 || $ae->getResponseBody() !== '') {
+            // Don't log "404 Character not found." error from Core.
+            if ($ae->getCode() !== 404 || strpos($ae->getMessage(), 'Character not found.') === false) {
                 error_log((string)$ae);
             }
             return $roles;
