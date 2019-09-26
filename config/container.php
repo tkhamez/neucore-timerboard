@@ -64,7 +64,7 @@ return [
         );
         $config = Brave\NeucoreApi\Configuration::getDefaultConfiguration();
         $config->setHost($container->get('settings')['CORE_URL']);
-        $config->setApiKey('Authorization', $apiKey);
+        $config->setAccessToken($apiKey);
         $config->setApiKeyPrefix('Authorization', 'Bearer');
 
         return new ApplicationApi(null, $config);

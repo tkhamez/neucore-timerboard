@@ -7,11 +7,6 @@
             "Brave\\TimerBoard\\": "src"
         }
     },
-    "repositories": [
-        { "type": "git", "url": "https://github.com/bravecollective/neucore-api.git" },
-        { "type": "git", "url": "https://github.com/bravecollective/sso-basics.git" },
-        { "type": "git", "url": "https://github.com/bravecollective/web-ui.git" }
-    ],
     "require": {
         "php": "^7.1",
         "ext-json": "*",
