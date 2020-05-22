@@ -12,11 +12,13 @@ include '_head.php'; // needs $isAdmin and $authName variables
 
 
 <?php
-foreach ([$activeEvents, $expiredEvents] as $idx => $events) {
+$evens = $currentPage > 1 ? [$expiredEvents] : [$activeEvents, $expiredEvents];
+$showActive = count($evens) === 2;
+foreach ($evens as $idx => $events) {
     /* @var $events \Brave\TimerBoard\Entity\Event[] */
 ?>
     <h3 class="text-light">
-        <?= $idx === 0 ? 'Active' : 'Expired' ?>
+        <?= $idx === 0 && $showActive ? 'Active' : 'Expired' ?>
         Timers
     </h3>
     <table class="table table-dark table-hover table-sm table-timer-board">
@@ -32,7 +34,9 @@ foreach ([$activeEvents, $expiredEvents] as $idx => $events) {
                 <th scope="col">Relative Time</th>
                 <th scope="col">Local Time</th>
                 <th scope="col">EVE Time</th>
-                <th scope="col">Result</th>
+                <?php if ($idx === 1 || ! $showActive) { // Expired ?>
+                    <th scope="col">Result</th>
+                <?php } ?>
                 <th scope="col">Notes</th>
                 <?php if ($isAdmin) { ?>
                     <th scope="col">Action</th>
@@ -72,7 +76,9 @@ foreach ([$activeEvents, $expiredEvents] as $idx => $events) {
                             <?= $timeFormat ?>
                         </a>
                     </td>
-                    <td><?= $this->esc($event->result) ?></td>
+                    <?php if ($idx === 1 || ! $showActive) { // Expired ?>
+                        <td><?= $this->esc($event->result) ?></td>
+                    <?php } ?>
                     <td><?= $this->esc($event->notes) ?></td>
                     <?php if ($isAdmin) { ?>
                         <td>
