@@ -42,6 +42,7 @@ include '_head.php'; // needs $isAdmin and $authName variables
             <option value="">please select</option>
             <option <?= $event->structure === 'TCU' ? 'selected' : '' ?>>TCU</option>
             <option <?= $event->structure === 'IHub' ? 'selected' : '' ?>>IHub</option>
+            <option <?= $event->structure === 'POS' ? 'selected' : '' ?>>POS</option>
             <option <?= $event->structure === 'POCO' ? 'selected' : '' ?>>POCO</option>
             <option <?= $event->structure === 'Raitaru' ? 'selected' : '' ?>>Raitaru</option>
             <option <?= $event->structure === 'Azbel' ? 'selected' : '' ?>>Azbel</option>
