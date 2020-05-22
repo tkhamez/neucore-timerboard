@@ -4,3 +4,8 @@
     padding-right: .2rem;
     padding-left: .2rem;
 }
+
+.table-timer-board thead {
+    position: sticky;
+    top: 0;
+}
