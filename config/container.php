@@ -4,9 +4,9 @@ use Brave\NeucoreApi\Api\ApplicationApi;
 use Brave\Sso\Basics\AuthenticationProvider;
 use Brave\TimerBoard\Entity\Event;
 use Brave\TimerBoard\Entity\System;
+use Brave\TimerBoard\Provider\RoleProviderInterface;
 use Brave\TimerBoard\Repository\EventRepository;
 use Brave\TimerBoard\Repository\SystemRepository;
-use Brave\TimerBoard\RoleProvider;
 use Brave\TimerBoard\Security;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -70,8 +70,9 @@ return [
         return new ApplicationApi(null, $config);
     },
 
-    RoleProvider::class => function (ContainerInterface $container) {
-        return new RoleProvider(
+    RoleProviderInterface::class => function (ContainerInterface $container) {
+        $class = $container->get('settings')['app.role_provider'];
+        return new $class(
             $container->get(ApplicationApi::class),
             $container->get(\Brave\Sso\Basics\SessionHandlerInterface::class)
         );
@@ -82,12 +83,10 @@ return [
             [ROOT_DIR . '/src/Entity'],
             true
         );
-        $em = EntityManager::create(
+        return EntityManager::create(
             ['url' => $container->get('settings')['DB_URL']],
             $config
         );
-
-        return $em;
     },
 
     EventRepository::class => function (ContainerInterface $container) {
@@ -105,7 +104,7 @@ return [
     Security::class => function (ContainerInterface $container) {
         return new Security(
             $container->get('settings'),
-            $container->get(RoleProvider::class),
+            $container->get(RoleProviderInterface::class),
             $container->get(\Brave\Sso\Basics\SessionHandlerInterface::class)
         );
     },

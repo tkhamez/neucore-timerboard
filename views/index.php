@@ -1,13 +1,14 @@
 <?php
-/* @var $this \Brave\TimerBoard\View */
-/* @var $isAdmin bool */
-/* @var $authName string */
-/* @var $activeEvents \Brave\TimerBoard\Entity\Event[] */
-/* @var $expiredEvents \Brave\TimerBoard\Entity\Event[] */
-/* @var $currentPage int */
-/* @var $pages int */
+/* @var \Brave\TimerBoard\View $this */
+/* @var \Brave\TimerBoard\View $head */
+/* @var \Brave\TimerBoard\View $foot */
+/* @var bool $isAdmin */
+/* @var \Brave\TimerBoard\Entity\Event[] $activeEvents */
+/* @var \Brave\TimerBoard\Entity\Event[] $expiredEvents */
+/* @var int $currentPage */
+/* @var int $pages */
 
-include '_head.php'; // needs $isAdmin and $authName variables
+echo $head->getContent();
 ?>
 
 
@@ -140,4 +141,4 @@ foreach ($evens as $idx => $events) {
 </nav>
 
 <?php
-include '_foot.php';
+echo $foot->getContent();

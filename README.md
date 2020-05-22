@@ -1,4 +1,4 @@
-# Brave Collective TimerBoard
+# EVE Online TimerBoard
 
 ## Install
 

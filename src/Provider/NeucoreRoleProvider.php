@@ -1,23 +1,19 @@
 <?php
+/** @noinspection PhpUnused */
 
-namespace Brave\TimerBoard;
+namespace Brave\TimerBoard\Provider;
 
 use Brave\NeucoreApi\Api\ApplicationApi;
 use Brave\NeucoreApi\ApiException;
+use Brave\Sso\Basics\EveAuthentication;
 use Brave\Sso\Basics\SessionHandlerInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Tkhamez\Slim\RoleAuth\RoleProviderInterface;
 
 /**
  * Provides groups from Brave Core from an authenticated user.
  */
-class RoleProvider implements RoleProviderInterface
+class NeucoreRoleProvider implements RoleProviderInterface
 {
-    /**
-     * This role is always added.
-     */
-    const ROLE_ANY = 'role:any';
-
     /**
      * @var ApplicationApi
      */
@@ -46,7 +42,7 @@ class RoleProvider implements RoleProviderInterface
     {
         $roles = [self::ROLE_ANY];
 
-        /* @var $eveAuth \Brave\Sso\Basics\EveAuthentication */
+        /* @var $eveAuth EveAuthentication */
         $eveAuth = $this->session->get('eveAuth', null);
         if ($eveAuth === null) {
             return $roles;

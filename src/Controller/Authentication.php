@@ -2,7 +2,7 @@
 namespace Brave\TimerBoard\Controller;
 
 use Brave\Sso\Basics\AuthenticationController;
-use Brave\TimerBoard\RoleProvider;
+use Brave\TimerBoard\Provider\RoleProviderInterface;
 use Brave\TimerBoard\SessionHandler;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -17,7 +17,7 @@ class Authentication extends AuthenticationController
     private $sessionHandler;
 
     /**
-     * @var RoleProvider
+     * @var RoleProviderInterface
      */
     private $roleProvider;
 
@@ -26,12 +26,37 @@ class Authentication extends AuthenticationController
      */
     protected $template = ROOT_DIR . '/views/sso_page.html';
 
+    public function index(ServerRequestInterface $request, ResponseInterface $response)
+    {
+        $response = parent::index($request, $response);
+
+        $settings = $this->container->get('settings');
+        $body = (new Response())->getBody();
+        $body->write(str_replace(
+            [
+                '{{appName}}',
+                '{{footer}}',
+                '{{logo}}',
+                '{{loginHint}}'
+            ],
+            [
+                htmlspecialchars($settings['app.name']),
+                htmlspecialchars($settings['app.footer']),
+                htmlspecialchars($settings['app.login_logo']),
+                $settings['app.login_hint'], // contains HTML
+            ],
+            $response->getBody()->__toString()
+        ));
+
+        return $response->withBody($body);
+    }
+
     public function __construct(ContainerInterface $container)
     {
         parent::__construct($container);
 
         $this->sessionHandler = $this->container->get(SessionHandler::class);
-        $this->roleProvider = $this->container->get(RoleProvider::class);
+        $this->roleProvider = $this->container->get(RoleProviderInterface::class);
     }
 
     public function callback(ServerRequestInterface $request, Response $response): ResponseInterface
@@ -47,6 +72,10 @@ class Authentication extends AuthenticationController
         return $response->withRedirect('/');
     }
 
+    /**
+     * @noinspection PhpUnusedParameterInspection
+     * @noinspection PhpUnused
+     */
     public function logout(ServerRequestInterface $request, Response $response): ResponseInterface
     {
         $this->sessionHandler->clear();

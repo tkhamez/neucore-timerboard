@@ -1,13 +1,15 @@
 <?php
 namespace Brave\TimerBoard;
 
+use Brave\Sso\Basics\EveAuthentication;
 use Brave\Sso\Basics\SessionHandlerInterface;
+use Brave\TimerBoard\Provider\RoleProviderInterface;
 use Slim\Collection;
 
 class Security
 {
     /**
-     * @var RoleProvider
+     * @var RoleProviderInterface
      */
     private $roleProvider;
 
@@ -20,8 +22,11 @@ class Security
 
     private $groupsWrite = [];
 
-    public function __construct(Collection $settings, RoleProvider $roleProvider, SessionHandlerInterface $session)
-    {
+    public function __construct(
+        Collection $settings,
+        RoleProviderInterface $roleProvider,
+        SessionHandlerInterface $session
+    ) {
         $this->roleProvider = $roleProvider;
         $this->session = $session;
 
@@ -64,7 +69,7 @@ class Security
      */
     public function getAuthorizedName()
     {
-        /* @var $eveAuth \Brave\Sso\Basics\EveAuthentication */
+        /* @var $eveAuth EveAuthentication */
         $eveAuth = $this->session->get('eveAuth', null);
 
         return $eveAuth ? $eveAuth->getCharacterName() : '';

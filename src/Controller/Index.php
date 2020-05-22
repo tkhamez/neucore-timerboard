@@ -8,6 +8,7 @@ use Slim\Http\Response;
 
 class Index extends BaseController
 {
+    /** @noinspection PhpUnused */
     public function board(Request $request, Response $response): ResponseInterface
     {
         $limit = 30;
@@ -22,8 +23,9 @@ class Index extends BaseController
         $pages = ceil($num / $limit);
 
         $view = new View(ROOT_DIR . '/views/index.php');
+        $view->addVar('head', $this->head);
+        $view->addVar('foot', $this->foot);
         $view->addVar('isAdmin', $this->security->isAdmin());
-        $view->addVar('authName', $this->security->getAuthorizedName());
         $view->addVar('activeEvents', $activeEvents);
         $view->addVar('expiredEvents', $expiredEvents);
         $view->addVar('currentPage', $page);

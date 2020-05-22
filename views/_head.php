@@ -1,7 +1,8 @@
 <?php
-/* @var $this \Brave\TimerBoard\View */
-/* @var $isAdmin bool */
-/* @var $authName string */
+/* @var \Brave\TimerBoard\View $this */
+/* @var bool $isAdmin */
+/* @var string $authName */
+/* @var string $appName */
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="initial-scale=1, shrink-to-fit=no, width=device-width" name="viewport">
-    <title>Brave Collective - TimerBoard</title>
+    <title><?= $this->esc($appName) ?></title>
     <link rel="stylesheet" href="/vendor/easy-autocomplete.min.css">
     <link rel="stylesheet" href="/vendor/easy-autocomplete.themes.min.css">
     <link rel="stylesheet" href="/assets/bravecollective/web-ui/css/brave.css">
@@ -18,7 +19,7 @@
 
 <body class="container-fluid">
     <header class="navbar navbar-dark bg-brave shadow-1 mb-3">
-        <span class="navbar-brand">Brave Collective - TimerBoard</span>
+        <span class="navbar-brand"><?= $this->esc($appName) ?></span>
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
                 <a class="nav-link" href="/">Home</a>

@@ -2,7 +2,9 @@
 namespace Brave\TimerBoard\Controller;
 
 use Brave\TimerBoard\Entity\Event;
+use Brave\TimerBoard\Entity\System;
 use Brave\TimerBoard\View;
+use DateTime;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Http\Request;
@@ -10,11 +12,12 @@ use Slim\Http\Response;
 
 class Admin extends BaseController
 {
+    /** @noinspection PhpUnusedParameterInspection */
     public function index(ServerRequestInterface $request, Response $response, array $args): ResponseInterface
     {
         $view = new View(ROOT_DIR . '/views/admin.php');
-        $view->addVar('isAdmin', $this->security->isAdmin());
-        $view->addVar('authName', $this->security->getAuthorizedName());
+        $view->addVar('head', $this->head);
+        $view->addVar('foot', $this->foot);
         $view->addVar('systemNames', $this->getSystemNames());
         $view->addVar('event', $this->getEvent($args));
 
@@ -44,6 +47,7 @@ class Admin extends BaseController
         return $response->withRedirect('/');
     }
 
+    /** @noinspection PhpUnusedParameterInspection */
     public function delete(Request $request, Response $response, array $args): ResponseInterface
     {
         $event = $this->getEvent($args);
@@ -60,7 +64,7 @@ class Admin extends BaseController
      */
     private function getSystemNames()
     {
-        /* @var $systems \Brave\TimerBoard\Entity\System[] */
+        /* @var $systems System[] */
         $systems = $this->systemRepository->findAll();
 
         $systemNames = [];
@@ -84,7 +88,7 @@ class Admin extends BaseController
         return $event;
     }
 
-    private function getDateFromRequest(Request $request): \DateTime
+    private function getDateFromRequest(Request $request): DateTime
     {
         $days = trim((string) $request->getParam('days'));
         $hours = trim((string) $request->getParam('hours'));
@@ -98,9 +102,7 @@ class Admin extends BaseController
             $dateStr = (string) $request->getParam('date') . ' ' . (string) $request->getParam('time');
         }
 
-        $dateTime = date_create($dateStr);
-
-        return $dateTime;
+        return date_create($dateStr);
     }
 
     private function getSystem(Request $request)

@@ -1,12 +1,10 @@
 <?php
-/* @var $this \Brave\TimerBoard\View */
+/* @var \Brave\TimerBoard\View $this */
+/* @var string $appFooter */
 ?>
 
     <footer class="navbar navbar-dark bg-brave shadow-1">
-        <div class="align-self-center">
-            Brave Collective Services. For support write to support@bravecollective.freshdesk.com
-            or ask in the ingame channel "Brave IT Team".
-        </div>
+        <div class="text-center" style="width: 100%"><?= $this->esc($appFooter) ?></div>
     </footer>
 
     <script src="/assets/bravecollective/web-ui/js/jquery.slim.min.js"></script>

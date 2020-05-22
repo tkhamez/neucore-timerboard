@@ -1,5 +1,7 @@
 <?php
 
+use Brave\TimerBoard\Provider\RoleProviderInterface;
+
 /**
  * Required roles (one of them) for routes.
  *
@@ -9,8 +11,8 @@
  * see .env.dist
  */
 return [
-    '/login' => [\Brave\TimerBoard\RoleProvider::ROLE_ANY],
-    '/auth'  => [\Brave\TimerBoard\RoleProvider::ROLE_ANY],
+    '/login' => [RoleProviderInterface::ROLE_ANY],
+    '/auth'  => [RoleProviderInterface::ROLE_ANY],
     '/admin' => '{APP_GROUPS_WRITE}',
     '/'      => '{APP_GROUPS_READ}',
 ];

@@ -5,7 +5,7 @@ return [
     'displayErrorDetails' => getenv('APP_ENV') === 'dev',
     'determineRouteBeforeAppMiddleware' => true,
 
-    // SSO CONFIGURATION
+    // SSO configuration
     'SSO_CLIENT_ID' => getenv('SSO_CLIENT_ID'),
     'SSO_CLIENT_SECRET' => getenv('SSO_CLIENT_SECRET'),
     'SSO_REDIRECTURI' => getenv('SSO_REDIRECTURI'),
@@ -15,19 +15,21 @@ return [
     'SSO_URL_JWT_KEY_SET' => 'https://login.eveonline.com/oauth/jwks',
     'SSO_SCOPES' => getenv('SSO_SCOPES'),
 
-    // App
-    'brave.serviceName' => 'Brave Collective TimerBoard',
-
-    // NEUCORE
+    // Neucore
     'CORE_URL' => getenv('CORE_URL'),
     'CORE_APP_ID' => getenv('CORE_APP_ID'),
     'CORE_APP_TOKEN' => getenv('CORE_APP_TOKEN'),
 
-    // DB
+    // Database
     'DB_URL' => getenv('DB_URL'),
 
-    // timer board
+    // Timer board
     'app.env' => getenv('APP_ENV'),
     'app.groups.read' => getenv('APP_GROUPS_READ'),
     'app.groups.write' => getenv('APP_GROUPS_WRITE'),
+    'app.name' => getenv('APP_NAME'),
+    'app.footer' => getenv('APP_FOOTER'),
+    'app.login_logo' => getenv('APP_LOGIN_LOGO'),
+    'app.login_hint' => getenv('APP_LOGIN_HINT'),
+    'app.role_provider' => getenv('APP_ROLE_PROVIDER'),
 ];

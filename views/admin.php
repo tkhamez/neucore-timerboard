@@ -1,11 +1,11 @@
 <?php
-/* @var $this \Brave\TimerBoard\View */
-/* @var $isAdmin bool */
-/* @var $authName string */
-/* @var $systemNames string[] */
-/* @var $event \Brave\TimerBoard\Entity\Event */
+/* @var \Brave\TimerBoard\View $this */
+/* @var \Brave\TimerBoard\View $head */
+/* @var \Brave\TimerBoard\View $foot */
+/* @var string[] $systemNames */
+/* @var \Brave\TimerBoard\Entity\Event $event */
 
-include '_head.php'; // needs $isAdmin and $authName variables
+echo $head->getContent();
 ?>
 
 <h1 class="text-light">
@@ -141,4 +141,4 @@ include '_head.php'; // needs $isAdmin and $authName variables
 <?php } ?>
 
 <?php
-include '_foot.php';
+echo $foot->getContent();

@@ -1,10 +1,14 @@
 <?php
 namespace Brave\TimerBoard;
 
+use Brave\TimerBoard\Provider\RoleProviderInterface;
 use Dotenv\Dotenv;
 use Interop\Container\Exception\ContainerException;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Slim\App;
+use Slim\Container;
+use Slim\Middleware\Session;
 use Tkhamez\Slim\RoleAuth\RoleMiddleware;
 use Tkhamez\Slim\RoleAuth\SecureRouteMiddleware;
 
@@ -30,7 +34,7 @@ class Bootstrap
             $dotEnv->load();
         }
 
-        $this->container = new \Slim\Container(require_once(ROOT_DIR . '/config/container.php'));
+        $this->container = new Container(require_once(ROOT_DIR . '/config/container.php'));
     }
 
     public function getContainer(): ContainerInterface
@@ -60,16 +64,17 @@ class Bootstrap
             $this->handleException($e);
         } catch(\Exception $e) {
             $this->handleException($e);
+        } catch (\Throwable $e) {
         }
     }
 
     /**
-     * @return \Slim\App
-     * @throws \Psr\Container\ContainerExceptionInterface
+     * @return App
+     * @throws ContainerExceptionInterface
      */
     private function enableRoutes()
     {
-        /** @var \Slim\App $app */
+        /** @var App $app */
         $routesConfigurator = require_once(ROOT_DIR . '/config/routes.php');
         $app = $routesConfigurator($this->container);
 
@@ -78,16 +83,16 @@ class Bootstrap
 
     /**
      * @param App $app
-     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws ContainerExceptionInterface
      */
     private function addMiddleware(App $app)
     {
         $security = $this->container->get(Security::class);
         $app->add(new SecureRouteMiddleware($security->readConfig(), ['redirect_url' => '/login']));
-        $app->add(new RoleMiddleware($this->container->get(RoleProvider::class)));
+        $app->add(new RoleMiddleware($this->container->get(RoleProviderInterface::class)));
 
-        $app->add(new \Slim\Middleware\Session([
-            'name' => 'brave_service',
+        $app->add(new Session([
+            'name' => 'timer_board',
             'autorefresh' => true,
             'lifetime' => '1 hour'
         ]));
