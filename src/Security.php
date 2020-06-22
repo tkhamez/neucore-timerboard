@@ -2,9 +2,9 @@
 namespace Brave\TimerBoard;
 
 use Brave\Sso\Basics\EveAuthentication;
-use Brave\Sso\Basics\SessionHandlerInterface;
 use Brave\TimerBoard\Provider\RoleProviderInterface;
 use Slim\Collection;
+use SlimSession\Helper;
 
 class Security
 {
@@ -14,7 +14,7 @@ class Security
     private $roleProvider;
 
     /**
-     * @var SessionHandlerInterface
+     * @var Helper
      */
     private $session;
 
@@ -25,7 +25,7 @@ class Security
     public function __construct(
         Collection $settings,
         RoleProviderInterface $roleProvider,
-        SessionHandlerInterface $session
+        Helper $session
     ) {
         $this->roleProvider = $roleProvider;
         $this->session = $session;

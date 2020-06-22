@@ -1,20 +1,25 @@
 <?php
 namespace Brave\TimerBoard\Controller;
 
-use Brave\Sso\Basics\AuthenticationController;
+use Brave\Sso\Basics\AuthenticationProvider;
 use Brave\TimerBoard\Provider\RoleProviderInterface;
-use Brave\TimerBoard\SessionHandler;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Slim\Http\Response;
+use SlimSession\Helper;
 
-class Authentication extends AuthenticationController
+class Authentication
 {
     /**
-     * @var SessionHandler
+     * @var array
      */
-    private $sessionHandler;
+    private $settings;
+
+    /**
+     * @var Helper
+     */
+    private $session;
 
     /**
      * @var RoleProviderInterface
@@ -22,51 +27,62 @@ class Authentication extends AuthenticationController
     private $roleProvider;
 
     /**
-     * @var string
+     * @var AuthenticationProvider
      */
-    protected $template = ROOT_DIR . '/views/sso_page.html';
+    private $authenticationProvider;
 
+    /**
+     * @throws \Exception
+     * @noinspection PhpUnusedParameterInspection
+     */
     public function index(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $response = parent::index($request, $response);
+        $state = $this->authenticationProvider->generateState();
+        $this->session->set('ssoState', $state);
 
-        $settings = $this->container->get('settings');
-        $body = (new Response())->getBody();
-        $body->write(str_replace(
-            [
-                '{{appName}}',
-                '{{footer}}',
-                '{{logo}}',
-                '{{loginHint}}'
-            ],
-            [
-                htmlspecialchars($settings['app.name']),
-                htmlspecialchars($settings['app.footer']),
-                htmlspecialchars($settings['app.login_logo']),
-                $settings['app.login_hint'], // contains HTML
-            ],
-            $response->getBody()->__toString()
-        ));
+        $response->getBody()->write(str_replace([
+            '{{loginUrl}}',
+            '{{appName}}',
+            '{{footer}}',
+            '{{logo}}',
+            '{{loginHint}}'
+        ], [
+            $this->authenticationProvider->buildLoginUrl($state),
+            htmlspecialchars($this->settings['app.name']),
+            htmlspecialchars($this->settings['app.footer']),
+            htmlspecialchars($this->settings['app.login_logo']),
+            $this->settings['app.login_hint'], // contains HTML
+        ], file_get_contents(ROOT_DIR . '/views/sso_page.html')));
 
-        return $response->withBody($body);
+        return $response;
     }
 
     public function __construct(ContainerInterface $container)
     {
-        parent::__construct($container);
-
-        $this->sessionHandler = $this->container->get(SessionHandler::class);
-        $this->roleProvider = $this->container->get(RoleProviderInterface::class);
+        $this->settings = $container->get('settings');
+        $this->session = $container->get(Helper::class);
+        $this->roleProvider = $container->get(RoleProviderInterface::class);
+        $this->authenticationProvider = $container->get(AuthenticationProvider::class);
     }
 
     public function callback(ServerRequestInterface $request, Response $response): ResponseInterface
     {
+        $queryParameters = $request->getQueryParams();
+        $code = $queryParameters['code'] ?? null;
+        $state = $queryParameters['state'] ?? null;
+        $sessionState = $this->session->get('ssoState');
+
+        $eveAuthentication = null;
         try {
-            parent::auth($request, $response, true);
+            if (! $code || ! $state) {
+                throw new \Exception('Invalid SSO state, please try again.');
+            }
+            $eveAuthentication = $this->authenticationProvider->validateAuthenticationV2($state, $sessionState, $code);
         } catch(\Exception $e) {
             error_log((string)$e);
         }
 
+        $this->session->set('eveAuth', $eveAuthentication);
         $this->roleProvider->clear();
 
         return $response->withRedirect('/');
@@ -78,7 +94,7 @@ class Authentication extends AuthenticationController
      */
     public function logout(ServerRequestInterface $request, Response $response): ResponseInterface
     {
-        $this->sessionHandler->clear();
+        $this->session->clear();
 
         return $response->withRedirect('/login');
     }

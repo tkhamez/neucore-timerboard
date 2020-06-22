@@ -14,6 +14,7 @@ use Doctrine\ORM\Tools\Setup;
 use League\OAuth2\Client\Provider\GenericProvider;
 use Psr\Container\ContainerInterface;
 use Slim\App;
+use SlimSession\Helper;
 
 return [
     'settings' => require_once('config.php'),
@@ -48,12 +49,8 @@ return [
         );
     },
 
-    \Brave\TimerBoard\SessionHandler::class => function (ContainerInterface $container) {
-        return new \Brave\TimerBoard\SessionHandler($container);
-    },
-
-    \Brave\Sso\Basics\SessionHandlerInterface::class => function (ContainerInterface $container) {
-        return $container->get(\Brave\TimerBoard\SessionHandler::class);
+    Helper::class => function () {
+        return new Helper();
     },
 
     ApplicationApi::class => function (ContainerInterface $container) {
@@ -74,7 +71,7 @@ return [
         $class = $container->get('settings')['app.role_provider'];
         return new $class(
             $container->get(ApplicationApi::class),
-            $container->get(\Brave\Sso\Basics\SessionHandlerInterface::class)
+            $container->get(Helper::class)
         );
     },
 
@@ -105,7 +102,7 @@ return [
         return new Security(
             $container->get('settings'),
             $container->get(RoleProviderInterface::class),
-            $container->get(\Brave\Sso\Basics\SessionHandlerInterface::class)
+            $container->get(Helper::class)
         );
     },
 ];

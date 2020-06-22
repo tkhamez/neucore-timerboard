@@ -6,8 +6,8 @@ namespace Brave\TimerBoard\Provider;
 use Brave\NeucoreApi\Api\ApplicationApi;
 use Brave\NeucoreApi\ApiException;
 use Brave\Sso\Basics\EveAuthentication;
-use Brave\Sso\Basics\SessionHandlerInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use SlimSession\Helper;
 
 /**
  * Provides groups from Brave Core from an authenticated user.
@@ -20,15 +20,15 @@ class NeucoreRoleProvider implements RoleProviderInterface
     private $api;
 
     /**
-     * @var SessionHandlerInterface
+     * @var Helper
      */
     private $session;
 
     /**
      * @param ApplicationApi $api
-     * @param SessionHandlerInterface $session
+     * @param Helper $session
      */
-    public function __construct(ApplicationApi $api, SessionHandlerInterface $session)
+    public function __construct(ApplicationApi $api, Helper $session)
     {
         $this->api = $api;
         $this->session = $session;
