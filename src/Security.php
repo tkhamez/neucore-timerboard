@@ -59,7 +59,7 @@ class Security
      */
     public function isAdmin()
     {
-        $roles = $this->roleProvider->getRoles();
+        $roles = $this->roleProvider->getCachedRoles();
 
         return count(array_intersect($this->groupsWrite, $roles)) > 0;
     }

@@ -13,4 +13,9 @@ interface RoleProviderInterface extends \Tkhamez\Slim\RoleAuth\RoleProviderInter
      * @return void
      */
     public function clear();
+
+    /**
+     * @return string[]
+     */
+    public function getCachedRoles();
 }

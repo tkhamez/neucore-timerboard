@@ -14,6 +14,8 @@ use SlimSession\Helper;
  */
 class NeucoreRoleProvider implements RoleProviderInterface
 {
+    const SESSION_CACHE_KEY = 'coreGroups';
+
     /**
      * @var ApplicationApi
      */
@@ -49,9 +51,9 @@ class NeucoreRoleProvider implements RoleProviderInterface
         }
 
         // try cache
-        $coreGroups = $this->session->get('coreGroups', null);
-        if (is_array($coreGroups) && $coreGroups['time'] > (time() - 60*60)) {
-            return $coreGroups['roles'];
+        $cachedGroups = $this->getCachedRoles();
+        if (! empty($cachedGroups)) {
+            return $cachedGroups;
         }
 
         // get groups from Core
@@ -69,7 +71,7 @@ class NeucoreRoleProvider implements RoleProviderInterface
         }
 
         // cache roles
-        $this->session->set('coreGroups', [
+        $this->session->set(self::SESSION_CACHE_KEY, [
             'time' => time(),
             'roles' => $roles
         ]);
@@ -79,6 +81,19 @@ class NeucoreRoleProvider implements RoleProviderInterface
 
     public function clear()
     {
-        $this->session->set('coreGroups', null);
+        $this->session->set(self::SESSION_CACHE_KEY, null);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getCachedRoles()
+    {
+        $coreGroups = $this->session->get(self::SESSION_CACHE_KEY, null);
+        if (is_array($coreGroups) && $coreGroups['time'] > (time() - 60*60)) {
+            return $coreGroups['roles'];
+        } else {
+            return [];
+        }
     }
 }
