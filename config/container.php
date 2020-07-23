@@ -69,6 +69,9 @@ return [
 
     RoleProviderInterface::class => function (ContainerInterface $container) {
         $class = $container->get('settings')['app.role_provider'];
+        if (! class_exists($class)) {
+            throw new Exception("Class '$class' does not exists.");
+        }
         return new $class(
             $container->get(ApplicationApi::class),
             $container->get(Helper::class)
