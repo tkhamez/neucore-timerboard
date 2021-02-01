@@ -52,6 +52,7 @@ abstract class BaseController
         $this->head->addVar('isAdmin', $this->security->isAdmin());
         $this->head->addVar('authName', $this->security->getAuthorizedName());
         $this->head->addVar('appName', $settings['app.name']);
+        $this->head->addVar('appHeadJs', $settings['app.head_js']);
 
         $this->foot = new View(ROOT_DIR . '/views/_foot.php');
         $this->foot->addVar('appFooter', $settings['app.footer']);

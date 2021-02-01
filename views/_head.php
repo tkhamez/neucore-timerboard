@@ -3,6 +3,7 @@
 /* @var bool $isAdmin */
 /* @var string $authName */
 /* @var string $appName */
+/* @var string $appHeadJs */
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,6 +16,7 @@
     <link rel="stylesheet" href="/vendor/easy-autocomplete.themes.min.css">
     <link rel="stylesheet" href="/assets/bravecollective/web-ui/css/brave.css">
     <link rel="stylesheet" href="/timer-board.css">
+    <script type="text/javascript"><?= $appHeadJs ?></script>
 </head>
 
 <body class="container-fluid">

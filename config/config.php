@@ -25,11 +25,12 @@ return [
 
     // Timer board
     'app.env' => getenv('APP_ENV'),
-    'app.groups.read' => getenv('APP_GROUPS_READ'),
-    'app.groups.write' => getenv('APP_GROUPS_WRITE'),
     'app.name' => getenv('APP_NAME'),
     'app.footer' => getenv('APP_FOOTER'),
     'app.login_logo' => getenv('APP_LOGIN_LOGO'),
     'app.login_hint' => getenv('APP_LOGIN_HINT'),
+    'app.head_js' => getenv('APP_HEAD_JS'),
     'app.role_provider' => getenv('APP_ROLE_PROVIDER'),
+    'app.groups.read' => getenv('APP_GROUPS_READ'),
+    'app.groups.write' => getenv('APP_GROUPS_WRITE'),
 ];
